@@ -1,0 +1,1 @@
+<a href="/writer">Go to the writer</a>
