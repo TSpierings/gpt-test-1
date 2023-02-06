@@ -1,14 +1,14 @@
 <script lang="ts">
-	export let value: string, label: string;
+	export let value: string, label: string, name: string;
 	export let rows: number = 4;
 </script>
 
 <p>
 	<label for={label}>{label}</label>
 	{#if rows === 1}
-		<input bind:value type="text" />
+		<input name={label} bind:value type="text" />
 	{:else}
-		<textarea {rows} bind:value />
+		<textarea name={label} {rows} bind:value />
 	{/if}
 </p>
 

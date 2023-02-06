@@ -13,7 +13,6 @@
 
   * {
     font-family: sans-serif;
-    color: white;
   }
 
   main {

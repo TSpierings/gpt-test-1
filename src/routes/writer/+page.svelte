@@ -1,11 +1,12 @@
 <script>
-  import CategoryCard from "../../lib/components/category-card.svelte";
+  import { Flows } from "$lib/flows";
+import CategoryCard from "../../lib/components/category-card.svelte";
 </script>
 
 <menu>
-  <CategoryCard categoryName='Pitch' imageUrl='pitch-icon.png' />
-  <CategoryCard categoryName='Wedding' imageUrl='wedding-icon.png'/>
-  <CategoryCard categoryName='Funeral' imageUrl='funeral-icon.png'/>
+  {#each Flows as flow}
+    <CategoryCard categoryName={flow.title} imageUrl={flow.image} />
+  {/each}
 </menu>
 
 <style lang="scss">

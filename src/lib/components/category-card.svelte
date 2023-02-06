@@ -51,6 +51,7 @@
 			background-color: $shade-6;
 			color: black;
 			filter: grayscale(0.8);
+			padding: 0.5em;
 		}
 	}
 </style>

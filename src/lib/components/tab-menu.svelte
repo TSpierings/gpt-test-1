@@ -3,19 +3,18 @@
 
 	export let tabs = ['Placeholder tab'];
 	export let onSelected: (index: number) => void;
+	export let selectedTab: number = 0;
 
 	const select = (index: number) => {
-		if (selected !== index) {
-			selected = index;
+		if (selectedTab !== index) {
 			onSelected(index);
 		}
 	};
-	let selected = 0;
 </script>
 
 <menu>
 	{#each tabs as tab, index}
-		<TabMenuItem title={tab} {index} selected={selected === index} onClick={select} />
+		<TabMenuItem title={tab} {index} selected={selectedTab === index} onClick={select} />
 	{/each}
 </menu>
 
