@@ -1,5 +1,5 @@
 <header>
-	<a href="/writer"><img src="/logo.png" alt="logo" /></a>
+	<a href="/"><img src="/logo.png" alt="logo" /></a>
 </header>
 
 <style lang="scss">

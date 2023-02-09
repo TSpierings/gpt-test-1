@@ -1,13 +1,16 @@
 <script lang="ts">
-	export let title: string;
+	import type { TabItem } from "./tab-item";
+
+	export let item: TabItem;
+
 	export let index: number;
 	export let selected = false;
 
 	export let onClick: (index: number) => void;
 </script>
 
-<option on:click={() => onClick(index)} class={selected ? 'selected' : undefined}>
-	{title}
+<option disabled={item.disabled} on:click={() => onClick(index)} class={`${selected ? 'selected' : ''}`}>
+	{item.name}
 </option>
 
 <style lang="scss">
@@ -20,8 +23,9 @@
 		background-color: $highlight;
 		font-weight: bold;
 		margin-bottom: 0.5em;
-		border-radius: 1em;
+		border-radius: 0.5em;
 		color: white;
+		text-align: center;
 
 		&:last-of-type {
 			margin-right: 0;
@@ -29,18 +33,23 @@
 
 		&:hover {
 			cursor: pointer;
-			background-color: lighten($highlight, 5%);		
+			background-color: lighten($highlight, 5%);
 			color: white;
-			border-radius: 1em;
 		}
 
 		&.selected {
 			cursor: unset;
-			background-color: $shade-7;			
+			background-color: $shade-7;
 			border-bottom: 0.5em solid $shade-7;
 			margin-bottom: 0;
 			border-radius: 1em 1em 0 0;
 			color: black;
+		}
+
+		&:disabled {
+			cursor: unset;
+			background-color: $shade-5;
+			color: $shade-3;
 		}
 	}
 </style>

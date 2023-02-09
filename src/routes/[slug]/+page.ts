@@ -1,4 +1,4 @@
-import { Flows } from './../../../lib/flows';
+import { Flows } from './../../lib/flows';
 import type { PageLoad } from './$types';
 import { error } from '@sveltejs/kit';
 

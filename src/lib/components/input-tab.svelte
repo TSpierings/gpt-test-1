@@ -1,7 +1,7 @@
 <script lang="ts">
-	import TextInputField from '$lib/components/text-input-field.svelte';
+	import TextInputField from '$lib/components/generic/text-input-field.svelte';
 	import type { DataField } from '$lib/flows';
-	import Divider from './divider.svelte';
+	import Divider from './generic/divider.svelte';
 
 	export let dataFields: Array<DataField>;
 	export let title: string = 'Default';
