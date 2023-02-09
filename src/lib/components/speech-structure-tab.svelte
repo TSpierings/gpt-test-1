@@ -14,12 +14,15 @@
 
 <h2>Speech structure</h2>
 <Divider />
-<div title="speech-structure">
+<div class="speech-structure">
   <input type="hidden" name="section-count" value={sections.length} />
 	{#each sections as section, index}
 		<section>
 			<div class="section-head">
-				<h4>Section {index + 1}: <input name="section-{index}" bind:value={section} /></h4>
+				<span class="section-name">
+					<h4>Section {index + 1}: </h4>
+					<input name="section-{index}" bind:value={section} />
+				</span>				
 				<button type="button" on:click={() => removeSection(index)}>Remove</button>
 			</div>
 			<div class="text-placeholder" style="margin-right: {Math.random() * 10}em;" />
@@ -39,7 +42,7 @@
 		padding: 0;
 	}
 
-	div {
+	.speech-structure {
 		display: grid;
 		row-gap: 1em;
 	}
@@ -53,7 +56,11 @@
 
 		.section-head {
 			display: flex;
-			justify-content: space-between;
+			margin-bottom: 1em;
+
+			.section-name {
+				flex: 1;
+			}
 
 			button {
 				font-size: small;
@@ -66,16 +73,14 @@
 			}
 		}
 
-		h4,
-		p {
+		h4, p {
 			margin: 0;
 			padding: 0;
 		}
 
 		h4 {
+			display: inline;
 			font-size: small;
-			margin-bottom: 1em;
-			overflow: hidden;
 		}
 
 		input {
