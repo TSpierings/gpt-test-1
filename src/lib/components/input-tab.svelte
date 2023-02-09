@@ -1,26 +1,30 @@
 <script lang="ts">
 	import TextInputField from '$lib/components/text-input-field.svelte';
 	import type { DataField } from '$lib/flows';
+	import Divider from './divider.svelte';
 
 	export let dataFields: Array<DataField>;
+	export let title: string = 'Default';
 </script>
 
-<div>
+<h2>{title}</h2>
+<Divider />
+<div class="grid">
 	{#each dataFields as field}
-		<TextInputField
-			name={field.name}
-			label={field.label}
-			bind:value={field.value}
-			rows={field.rows}
-		/>
+		<TextInputField label={field.label} bind:value={field.value} rows={field.rows} />
 	{/each}
 </div>
 
 <style lang="scss">
 	@use '/src/lib/colors.scss' as *;
 
-	div {
-		display: flex;
-		flex-direction: column;
+	h2 {
+		margin: 0;
+		padding: 0;
+	}
+
+	.grid {
+		display: grid;
+		row-gap: 1em;
 	}
 </style>

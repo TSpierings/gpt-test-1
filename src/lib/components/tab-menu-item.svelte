@@ -12,27 +12,35 @@
 
 <style lang="scss">
 	@use '/src/lib/colors.scss' as *;
+
 	option {
 		flex: 1;
-		padding: 0.5em;
-		margin-right: 0.2em;
-		background-color: $shade-1-5;
-		color: $text-light;
+		padding: 0.5em 1.5em;
+		margin-right: 1em;
+		background-color: $highlight;
 		font-weight: bold;
-		border-bottom: 0.5em solid white;
+		margin-bottom: 0.5em;
+		border-radius: 1em;
+		color: white;
+
+		&:last-of-type {
+			margin-right: 0;
+		}
 
 		&:hover {
 			cursor: pointer;
-			background-color: $shade-5;
-			border-color: $shade-5;
-			color: $text-dark;
+			background-color: lighten($highlight, 5%);		
+			color: white;
+			border-radius: 1em;
 		}
 
 		&.selected {
 			cursor: unset;
-			background-color: $shade-1;
-			border-color: $shade-1;
-			color: $text-light;
+			background-color: $shade-7;			
+			border-bottom: 0.5em solid $shade-7;
+			margin-bottom: 0;
+			border-radius: 1em 1em 0 0;
+			color: black;
 		}
 	}
 </style>

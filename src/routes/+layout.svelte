@@ -1,23 +1,34 @@
 <script>
-  import Header from '../lib/header.svelte'
+	import ProgressBar from '$lib/components/progress-bar.svelte';
+	import Header from '../lib/header.svelte';
 </script>
 
 <main id="main">
-  <Header/>
+	<Header />
 
-  <slot/>
+	<slot />
 </main>
 
 <style lang="scss">
-  @use '/src/lib/colors.scss' as *;
+	@use '/src/lib/colors.scss' as *;
 
-  * {
-    font-family: sans-serif;
-  }
+	@font-face {
+		font-family: 'proximanova-regular';
+		font-style: normal;
+		font-weight: 500;
+		src: url('/proximanova-regular.otf');
+	}
 
-  main {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
+	* {
+		font-family: 'proximanova-regular', sans-serif;
+		font-style: normal;
+		font-weight: 100;
+	}
+
+	main {
+		display: flex;
+		flex-direction: column;
+		min-height: 100vh;
+		background-color: $shade-6;
+	}
 </style>

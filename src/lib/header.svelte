@@ -1,5 +1,5 @@
 <header>
-	<a href="/writer"><h1>Speechify</h1></a>
+	<a href="/writer"><img src="/logo.png" alt="logo" /></a>
 </header>
 
 <style lang="scss">
@@ -9,8 +9,10 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		padding: 0.5em 1em;
-		background-color: $shade-1;
+		padding: 0.5em 1em 0.2em 2em;
+		background-color: $shade-7;
+		box-shadow: 0px 0.1em 0.1em rgba(0, 0, 0, 0.1);
+		margin-bottom: 0.1em;
 
 		a {
 			color: white;
@@ -20,13 +22,6 @@
 			&:hover {
 				color: $color-primary-focus;
 			}
-		}
-
-		h1 {
-			margin: 0.3em;
-			padding: 0;
-			color: white;
-			text-decoration: none;
 		}
 	}
 </style>

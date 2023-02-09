@@ -1,14 +1,14 @@
 <script lang="ts">
-	export let value: string, label: string, name: string;
+	export let value: string, label: string;
 	export let rows: number = 4;
 </script>
 
 <p>
 	<label for={label}>{label}</label>
 	{#if rows === 1}
-		<input name={label} bind:value type="text" />
+		<input name={label} bind:value type="text" placeholder="Your input here" />
 	{:else}
-		<textarea name={label} {rows} bind:value />
+		<textarea name={label} {rows} bind:value placeholder="Your input here" />
 	{/if}
 </p>
 
@@ -18,16 +18,35 @@
 	p {
 		display: flex;
 		flex-direction: column;
-		margin: 0.4em;
-		margin-bottom: 0.8em;
+		margin: 0;
 
 		label {
 			margin-bottom: 0.4em;
-			font-size: small;
+			font-weight: bold;
 		}
 
-    textarea {
-      resize: vertical;
-    }
+		input {
+			border: 1px solid $shade-4;
+			outline: none;
+			border-radius: 0.5em;
+			padding: 0.5em;
+
+			&:focus {
+				border-color: $highlight;
+			}
+		}
+
+		textarea {
+			border: 1px solid $shade-4;
+			outline: none;
+			border-radius: 0.5em;
+			padding: 0.5em;
+			resize: vertical;
+			font-family: 'proximanova-regular', sans-serif;
+
+			&:focus {
+				border-color: $highlight;
+			}
+		}
 	}
 </style>

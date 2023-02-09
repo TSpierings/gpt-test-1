@@ -1,12 +1,13 @@
 <script>
-	export let categoryName = 'Default';
-	export let imageUrl = '';
+	export let title = 'Default';
+	export let description = 'No description';
 </script>
 
 <li>
-	<a href="writer/{categoryName.toLowerCase()}">
-		<h2>{categoryName}</h2>
-		<img src={imageUrl} alt="placeholder" />
+	<a href="writer/{title.toLowerCase()}">
+		<h2>{title}</h2>
+		<div class="divider" />
+		<p>{description}</p>
 	</a>
 </li>
 
@@ -14,44 +15,38 @@
 	@use '/src/lib/colors.scss' as *;
 
   a {
-    display: contents;
+		color: black;
+		padding: 1em;
+		text-decoration: none;
   }
 
 	li {
 		display: flex;
 		flex-direction: column;
-		background-color: white;
+		background-color: $shade-7;
 		margin: 2em;
-		border-radius: 0.5em;
-		border: 0.3em solid black;
+		border-radius: 1em;
 		color: black;
 
 		&:hover {      
-      background-color: $shade-1;
+      background-color: $selected;
 			cursor: pointer;
-      
-      h2 {
-        color: white;        
-      }
-
-			img {
-				filter: none;
-			}
 		}
 
 		h2 {
-			margin: 0.5em;
+			margin: 0;
       color: black;
+			font-size: 24px;
 		}
 
-		img {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			background-color: $shade-6;
-			color: black;
-			filter: grayscale(0.8);
-			padding: 0.5em;
+		.divider {
+			height: 0.1em;
+			margin: 0.5em 0;
+			background-color: $shade-5;
+		}
+
+		p {
+			margin: 0;
 		}
 	}
 </style>

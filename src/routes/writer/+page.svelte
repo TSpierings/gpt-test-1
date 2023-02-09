@@ -5,7 +5,7 @@ import CategoryCard from "../../lib/components/category-card.svelte";
 
 <menu>
   {#each Flows as flow}
-    <CategoryCard categoryName={flow.title} imageUrl={flow.image} />
+    <CategoryCard title={flow.title} imageUrl={flow.image} />
   {/each}
 </menu>
 
