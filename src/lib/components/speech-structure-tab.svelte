@@ -75,13 +75,14 @@
 		h4 {
 			font-size: small;
 			margin-bottom: 1em;
+			overflow: hidden;
 		}
 
 		input {
 			border: 1px solid $shade-4;
 			outline: none;
 			border-radius: 0.5em;
-			margin-left: 0.5em;
+			max-width: 7em;
 
 			&:focus {
 				border-color: $highlight;
