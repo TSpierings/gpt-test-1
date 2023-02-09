@@ -14,35 +14,46 @@
 	};
 
 	let sections = ['Intro', 'Middle', 'Outro'];
-  let tabs = [{
-    name: 'Speech structure',
-    disabled: false
-  },{
-    name: 'Prompt preview',
-    disabled: false
-  },{
-    name: 'Draft',
-    disabled: true
-  },]
+	let tabs = [
+		{
+			name: 'Speech structure',
+			disabled: false
+		},
+		{
+			name: 'Prompt preview',
+			disabled: false
+		},
+		{
+			name: 'Draft',
+			disabled: speechResult === ''
+		}
+	];
+
+	$: {
+		if (speechResult !== '') {
+			tabs[2].disabled = false;
+			activeTab = 2;
+		}
+	}
 </script>
 
 <div title="preview-panel">
-	<TabMenu
-		tabs={tabs}
-		onSelected={selectTab}
-		selectedTab={activeTab}
-	/>
+	<TabMenu {tabs} onSelected={selectTab} selectedTab={activeTab} />
 	<section>
-		{#if activeTab === 0}
+		<div class={activeTab !== 0 ? 'hidden' : ''}>
 			<SpeechStructureTab bind:sections />
-		{:else if activeTab === 1}
+		</div>
+		<div class={activeTab !== 1 ? 'hidden' : ''}>
 			<PromptPreview {sections} {steps} />
-		{:else if activeTab === 2}
+		</div>
+		<div class={activeTab !== 2 ? 'hidden' : ''}>
 			<h2>Result</h2>
 			<Divider />
-			<h4>Draft</h4>
-			<p>{speechResult.trim()}</p>
-		{/if}
+			<section>
+				<h4>Draft</h4>
+				<p>{speechResult}</p>
+			</section>
+		</div>
 	</section>
 </div>
 
@@ -51,6 +62,10 @@
 
 	div {
 		grid-column: span 2;
+	}
+
+	.hidden {
+		display: none !important;
 	}
 
 	section {
@@ -67,25 +82,24 @@
 			padding: 0;
 		}
 
-		h4 {
-			display: flex;
-			width: fit-content;
-			margin: 1em 0 0 0;
-			padding: 0.2em 0.5em;
-			font-size: small;
-			background-color: $shade-6;
-			color: $text-dark;
-			border-radius: 0.5em 0.5em 0 0;
-		}
-
-		p {
+		section {
 			margin: 0;
 			padding: 1em;
 			background-color: $shade-6;
-			border-radius: 0 0.5em 0.5em 0.5em;
+			border-radius: 0.5em;
 			color: $text-dark;
-			font-weight: bold;
-			white-space: pre-line;
+
+			h4,
+			p {
+				margin: 0;
+				padding: 0;
+				white-space: break-spaces;
+			}
+
+			h4 {
+				font-size: small;
+				margin-bottom: 1em;
+			}
 		}
 	}
 </style>

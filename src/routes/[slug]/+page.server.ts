@@ -45,27 +45,20 @@ export const actions = {
 } satisfies Actions;
 
 const foo = {
-  "type": "success",
-  "status": 200,
-  "data": {
-      "status": 200,
-      "result": {
-          "id": "cmpl-6gyS3xO8dyYsQx0mfq8kC9kFOVz8E",
-          "object": "text_completion",
-          "created": 1675700171,
-          "model": "text-ada-001",
-          "choices": [
-              {
-                  "text": "Hello investors!\n\nWe are Speechify, a AI app that helps businesses and organizations create speech for their given use cases.\n\nWe are here to help you and your clients get the most out of their conversations, and help them to understand what you are saying.\n\nWe have over two thousand users and our app has been proven to be effective in making sure that clients understand what you are saying.\n\nWe would love to have you on our team, and would be happy to discuss your idea with you and your clients.\n\nThank you for your time,\n\n Speechify",
-                  "index": 0,
-                  "finish_reason": "stop"
-              }
-          ],
-          "usage": {
-              "prompt_tokens": 63,
-              "completion_tokens": 125,
-              "total_tokens": 188
-          }
-      }
+  "id": "cmpl-6gyS3xO8dyYsQx0mfq8kC9kFOVz8E",
+  "object": "text_completion",
+  "created": 1675700171,
+  "model": "text-ada-001",
+  "choices": [
+    {
+      "text": "Hello investors!\n\nWe are Speechify, a AI app that helps businesses and organizations create speech for their given use cases.\n\nWe are here to help you and your clients get the most out of their conversations, and help them to understand what you are saying.\n\nWe have over two thousand users and our app has been proven to be effective in making sure that clients understand what you are saying.\n\nWe would love to have you on our team, and would be happy to discuss your idea with you and your clients.\n\nThank you for your time,\n\n Speechify",
+      "index": 0,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 63,
+    "completion_tokens": 125,
+    "total_tokens": 188
   }
 };
