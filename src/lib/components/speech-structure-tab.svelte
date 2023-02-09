@@ -79,8 +79,12 @@
 		}
 
 		h4 {
-			display: inline;
+			display: block;
 			font-size: small;
+
+			@media (min-width: 768px) {
+				display: inline;
+			}
 		}
 
 		input {
