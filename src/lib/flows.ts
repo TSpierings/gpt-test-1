@@ -1,5 +1,6 @@
 export interface Flow {
   title: string;
+  description: string;
   image: string;
   steps: Array<Step>;
 }
@@ -18,7 +19,8 @@ export interface DataField {
 
 export const Flows: Array<Flow> = [
   {
-    title: 'Simple',
+    title: 'Hackathon pitch',
+    description: 'Create the perfect pitch for a hackathon project',
     image: 'A.jpg',
     steps: [{
       title: 'Intro',
@@ -27,17 +29,12 @@ export const Flows: Array<Flow> = [
           name: 'team-name',
           label: 'Team name',
           rows: 1,
-          value: 'Speechify'
+          value: 'Speeching.ai'
         }, {
-          name: 'speech-goal',
-          label: 'Speech goal',
+          name: 'target-audience',
+          label: 'Target audience',
           rows: 4,
-          value: 'Pitching an idea to a group of investors'
-        }, {
-          name: 'extra-intro-info',
-          label: 'Extra introduction',
-          rows: 4,
-          value: 'This pitch should be short and energizing'
+          value: 'A panel of investors at a hackathon event'
         }
       ]
     }, {
@@ -47,23 +44,35 @@ export const Flows: Array<Flow> = [
           name: 'description',
           label: 'Project description',
           rows: 6,
-          value: 'Speechify is an AI app that helps a person create a speech for a given use case'
+          value: 'Speeching.ai is an AI app that helps a person create a speech for a given use case'
+        }, {
+          name: 'speech-goal',
+          label: 'Speech goal',
+          rows: 6,
+          value: 'Show people at the event how cool our idea is'
         }, {
           name: 'extra-description-info',
           label: 'Extra description',
           rows: 4,
           value: ''
+        }, {
+          name: 'speech-length',
+          label: 'Speech length',
+          rows: 1,
+          value: 'The speech can last 5 minutes'
         }
       ]
     }]
   },
   {
-    title: 'Complex',
+    title: 'Placeholder',
+    description: 'Place the perfect holder for this description',
     image: 'C.jpg',
     steps: []
   },
   {
     title: 'Empty',
+    description: '',
     image: 'B.jpg',
     steps: []
   }

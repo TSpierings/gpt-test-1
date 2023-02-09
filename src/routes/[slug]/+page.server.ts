@@ -21,7 +21,7 @@ export const actions = {
 
     console.log(prompt);
 
-    // return { status: 200, result: foo };
+    return { status: 200, result: foo };
 
     const response = await fetch('https://api.openai.com/v1/completions', {
       method: 'POST',

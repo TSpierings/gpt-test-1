@@ -4,7 +4,7 @@
 </script>
 
 <li>
-	<a href="writer/{title.toLowerCase()}">
+	<a href="{title.toLowerCase()}">
 		<h2>{title}</h2>
 		<div class="divider" />
 		<p>{description}</p>
@@ -24,7 +24,6 @@
 		display: flex;
 		flex-direction: column;
 		background-color: $shade-7;
-		margin: 2em;
 		border-radius: 1em;
 		color: black;
 

@@ -1,7 +1,8 @@
 <script lang="ts">
+	import type { TabItem } from './tab-item';
 	import TabMenuItem from './tab-menu-item.svelte';
 
-	export let tabs = ['Placeholder tab'];
+	export let tabs: Array<TabItem>;
 	export let onSelected: (index: number) => void;
 	export let selectedTab: number = 0;
 
@@ -14,7 +15,7 @@
 
 <menu>
 	{#each tabs as tab, index}
-		<TabMenuItem title={tab} {index} selected={selectedTab === index} onClick={select} />
+		<TabMenuItem item={tab} {index} selected={selectedTab === index} onClick={select} />
 	{/each}
 </menu>
 

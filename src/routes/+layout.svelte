@@ -1,5 +1,5 @@
 <script>
-	import ProgressBar from '$lib/components/progress-bar.svelte';
+	import ProgressBar from '$lib/components/generic/progress-bar.svelte';
 	import Header from '../lib/header.svelte';
 </script>
 
