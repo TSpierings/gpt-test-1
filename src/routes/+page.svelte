@@ -22,14 +22,14 @@
 		margin: 2em;
 		padding: 0;
 		display: grid;
-		grid-template-columns: repeat(3, minmax(100px, 1fr));
+		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 		gap: 2em;
 
 		.welcome {
 			display: flex;
 			flex-direction: column;
 			background-color: $shade-7;
-			grid-column: 1 / span 3;
+			grid-column: 1 / -1;
 			border-radius: 2em;
 			padding: 1.5em;
 

@@ -44,13 +44,17 @@
 	form {
 		flex: 1;
 		display: grid;
-		grid-template-columns: repeat(3, 1fr);
+		grid-template-columns: 1fr;
 		grid-template-rows: min-content 1fr min-content;
 		margin: 1em 2em;
 		gap: 2em;
 
+		@media (min-width: 768px) {
+			grid-template-columns: 1fr 1fr 1fr;
+		}
+
 		.progress-bar {
-			grid-column: 1 / span 3;
+			grid-column: 1 / -1;
 		}
 	}
 </style>

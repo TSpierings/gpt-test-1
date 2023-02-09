@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { TabItem } from "./tab-item";
+	import type { TabItem } from './tab-item';
 
 	export let item: TabItem;
 
@@ -9,7 +9,11 @@
 	export let onClick: (index: number) => void;
 </script>
 
-<option disabled={item.disabled} on:click={() => onClick(index)} class={`${selected ? 'selected' : ''}`}>
+<option
+	disabled={item.disabled}
+	on:click={() => onClick(index)}
+	class={`${selected ? 'selected' : ''}`}
+>
 	{item.name}
 </option>
 
@@ -26,6 +30,8 @@
 		border-radius: 0.5em;
 		color: white;
 		text-align: center;
+		overflow: hidden;
+		text-overflow: ellipsis;
 
 		&:last-of-type {
 			margin-right: 0;

@@ -19,7 +19,7 @@
 		background-color: $shade-7;
 		color: black;
 		border-radius: 2em 2em;
-    grid-column: span 3;
+    grid-column: 1 / -1;
 
     h1 {
       margin: 0;

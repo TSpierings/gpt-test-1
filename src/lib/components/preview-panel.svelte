@@ -59,9 +59,15 @@
 
 <style lang="scss">
 	@use '/src/lib/colors.scss' as *;
-
+	
 	div {
-		grid-column: span 2;
+		overflow: hidden;
+	}
+
+	@media (min-width: 768px) {
+		div {
+			grid-column: 2 / span 2;
+		}
 	}
 
 	.hidden {

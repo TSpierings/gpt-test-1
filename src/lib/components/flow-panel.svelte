@@ -45,6 +45,10 @@
 
 <style lang="scss">
 	@use '/src/lib/colors.scss' as *;
+	
+	div {
+		grid-row: 2;
+	}
 
 	section {
 		display: flex;
