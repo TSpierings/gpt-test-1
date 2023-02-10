@@ -19,7 +19,7 @@
 	};
 </script>
 
-<div title="flow-panel">
+<div>
 	<TabMenu {tabs} onSelected={selectTab} selectedTab={activeTab} />
 	<section>
 		{#each steps as step, index}

@@ -1,14 +1,25 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import ChatEnhancer from '$lib/components/chat-enhancer.svelte';
 	import FlowPanel from '$lib/components/flow-panel.svelte';
 	import PreviewPanel from '$lib/components/preview-panel.svelte';
 	import ProgressBar from '$lib/components/generic/progress-bar.svelte';
 	import type { PageData } from './$types';
+	import DraftPanel from '$lib/components/draft-panel.svelte';
+	import DraftOptions from '$lib/components/draft-options.svelte';
 
 	export let data: PageData;
 
 	let speechResult = '';
+	let draftMode = false;
+  let sections = ['Intro', 'Middle', 'Outro'];
+  let progress = 0;
+
+	$: {
+		if (speechResult) {
+			draftMode = true;
+      progress = 1;
+		}
+	}
 </script>
 
 <form
@@ -28,14 +39,16 @@
 	action="?/prompt"
 >
 	<div class="progress-bar">
-		<ProgressBar milestones={['Basics', 'Draft', 'Summary']} />
+		<ProgressBar milestones={['Basics', 'Draft', 'Summary']} progress={progress} />
 	</div>
 
-	<FlowPanel bind:steps={data.flow.steps} />
-
-	<PreviewPanel steps={data.flow.steps} {speechResult} />
-
-	<ChatEnhancer />
+	{#if !draftMode}
+		<FlowPanel bind:steps={data.flow.steps} />
+		<PreviewPanel bind:sections={sections} steps={data.flow.steps} {speechResult} />
+	{:else}
+    <DraftPanel sections={sections} speechResult={speechResult} />
+    <DraftOptions />
+	{/if}
 </form>
 
 <style lang="scss">

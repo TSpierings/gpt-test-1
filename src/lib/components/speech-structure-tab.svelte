@@ -21,7 +21,7 @@
 			<div class="section-head">
 				<span class="section-name">
 					<h4>Section {index + 1}: </h4>
-					<input name="section-{index}" bind:value={section} />
+					<input name="Section {index}" bind:value={section} />
 				</span>				
 				<button type="button" on:click={() => removeSection(index)}>Remove</button>
 			</div>

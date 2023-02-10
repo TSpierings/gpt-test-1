@@ -16,7 +16,7 @@
 		font-family: 'proximanova-regular';
 		font-style: normal;
 		font-weight: 500;
-		src: url('/proximanova-regular.otf');
+		src: url('/prox.otf');
 	}
 
 	* {

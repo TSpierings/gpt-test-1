@@ -13,16 +13,16 @@
 	};
 </script>
 
-<menu>
+<div class="tab-menu">
 	{#each tabs as tab, index}
 		<TabMenuItem item={tab} {index} selected={selectedTab === index} onClick={select} />
 	{/each}
-</menu>
+</div>
 
 <style lang="scss">
 	@use '/src/lib/colors.scss' as *;
 
-	menu {
+	.tab-menu {
 		list-style-type: none;
 		margin: 0;
 		padding: 0;

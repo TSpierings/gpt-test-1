@@ -9,18 +9,20 @@
 	export let onClick: (index: number) => void;
 </script>
 
-<option
+<button
+  type="button"
 	disabled={item.disabled}
 	on:click={() => onClick(index)}
-	class={`${selected ? 'selected' : ''}`}
+	class={`${selected ? 'selected' : ''} tab-item`}
 >
 	{item.name}
-</option>
+</button>
 
 <style lang="scss">
 	@use '/src/lib/colors.scss' as *;
 
-	option {
+	.tab-item {
+    margin: none;
 		flex: 1;
 		padding: 0.5em 1.5em;
 		margin-right: 1em;
@@ -32,6 +34,9 @@
 		text-align: center;
 		overflow: hidden;
 		text-overflow: ellipsis;
+    border: none;
+    font-size: 1em;
+		font: inherit;
 
 		&:last-of-type {
 			margin-right: 0;

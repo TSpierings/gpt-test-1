@@ -11,7 +11,7 @@
 		<p>Below are a set of speech flows you can try out</p>
 	</div>
 	{#each Flows as flow}
-		<CategoryCard title={flow.title} description={flow.description} />
+		<CategoryCard description={flow.description} />
 	{/each}
 </div>
 
