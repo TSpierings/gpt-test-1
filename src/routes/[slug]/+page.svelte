@@ -6,19 +6,83 @@
 	import type { PageData } from './$types';
 	import DraftPanel from '$lib/components/draft-panel.svelte';
 	import DraftOptions from '$lib/components/draft-options.svelte';
+	import DraftMutation from '$lib/components/draft-mutation.svelte';
+	import type { MutationOption, SpeechSection } from '$lib/flows';
 
 	export let data: PageData;
 
+	let speechHistory: Array<SpeechSection> = [];
 	let speechResult = '';
 	let draftMode = false;
-  let sections = ['Intro', 'Middle', 'Outro'];
-  let progress = 0;
+	let sections = ['Intro', 'Middle', 'Outro'];
+	let progress = 0;
+	let loading = false;
+
+	let openedMutation: MutationOption | undefined;
+	let mutations: Array<MutationOption> = [
+		{
+			code: 'add-question',
+			title: 'Question to the audience',
+			description:
+				'Incorporating audience questions into the introduction of a pitch can be beneficial as it allows for interaction and engagement, reducing your nerves and making the audience feel more involved in the presentation.',
+			placeholder: 'If you have an idea about type of question you want to ask, let me know',
+			enabled: false
+		},
+		{
+			code: 'personal-story',
+			title: 'Incorporate a personal story',
+			description:
+				'Adding a personal story humanizes the speaker and creates a connection, making the pitch more memorable and relatable.',
+			placeholder: 'Tell me more about the story you want to share.',
+			enabled: false
+		},
+		{
+			code: 'catchy-summary',
+			title: 'Add a catchy summary of your solution ',
+			description: `Including an analogy in intro simplifies audience's understanding of the product by relating it to something familiar, making it more memorable and effective.`,
+			placeholder:
+				'For example: with speeching AI we want to be the Canva of pitches, enabling everyone to easily create their own story',
+			enabled: false
+		},
+		{
+			code: 'highlight-problem',
+			title: 'Highlight the problem more clearly',
+			description:
+				'When a problem is clearly highlighted, it establishes the urgency and necessity for a solution. By clearly outlining the problem, you not only grab the attention of your audience, but also create a roadmap for the solution that your product or idea provides.',
+			placeholder: 'If there are specific elements you want to highlight, let me know.',
+			enabled: false
+		},
+		{
+			code: 'add-quote',
+			title: `Add a famous quote`,
+			description: `The use of famous quotes in an introduction can serve to add credibility and authority to the speaker's message. Additionally, a well-chosen quote can add emotional impact, engage the audience, and create a memorable moment in the introduction.`,
+			placeholder: `There's nothing wrong with standing on shoulders of giants`,
+			enabled: false
+		},
+		{
+			code: 'reference-circumstance',
+			title: `Add a reference to the specific circumstance you're in`,
+			description:
+				'Incorporating observations about your context into your presentation helps to connect with the audience and make the presentation relatable and memorable. It also adds a personal touch and can set a lighthearted tone for the rest of the presentation.',
+			placeholder: `What's the observation you want to include? IE: I'm wearing an orange sweater or we lost half our team while writing this pitch`,
+			enabled: false
+		}
+	];
+
+	let parseHistory = () => '';
 
 	$: {
 		if (speechResult) {
 			draftMode = true;
-      progress = 1;
+			progress = 1;
 		}
+
+    parseHistory = () =>
+		speechHistory
+			.map((section) => {
+				return `${section.title}:\n${section.history[section.cursor]}`;
+			})
+			.join('\n')
 	}
 </script>
 
@@ -26,29 +90,74 @@
 	autocomplete="off"
 	method="post"
 	use:enhance={({ form, data, action, cancel }) => {
-		speechResult = 'Generating result...';
+		console.log(data);
+		loading = true;
+
+		if (action.search === '?/mutate') {
+			return async ({ result }) => {
+				loading = false;
+
+				if (result.type === 'success') {
+					const paragraph = result.data?.result?.choices[0]?.text;
+					const selectedSection = data.get('selected-section');
+					console.log(paragraph);
+
+					console.log(`Selected section: ${data.get('selected-section')}`);
+
+					const speechSection = speechHistory.find((section) => section.title === selectedSection);
+					if (speechSection) {
+						speechSection.history.push(paragraph.trim());
+						speechSection.cursor = speechSection.history.length - 1;
+					}
+
+					speechResult = speechResult.replace(
+						RegExp(`(${data.get('selected-section')}:\n).+`),
+						`$1${paragraph.trim()}`
+					);
+
+					console.log(speechResult);
+					console.log(speechHistory);
+				}
+			};
+		}
 
 		return async ({ result, update }) => {
-			console.log(result);
+			loading = false;
+
 			if (result.type === 'success') {
 				speechResult = result.data?.result?.choices[0]?.text;
+				speechHistory = sections.map((section) => {
+					return {
+						title: section,
+						history: [RegExp(`${section}:\n(.+)`, 'g').exec(speechResult)?.at(1) ?? ''],
+						cursor: 0
+					};
+				});
 				console.log(speechResult);
+				console.log(speechHistory);
 			}
 		};
 	}}
 	action="?/prompt"
 >
+	<textarea hidden name="speech-result" value={parseHistory()} />
 	<div class="progress-bar">
-		<ProgressBar milestones={['Basics', 'Draft', 'Summary']} progress={progress} />
+		<ProgressBar milestones={['Basics', 'Draft', 'Summary']} {progress} />
 	</div>
 
-	{#if !draftMode}
+	<div class={draftMode ? 'hidden' : 'contents'}>
 		<FlowPanel bind:steps={data.flow.steps} />
-		<PreviewPanel bind:sections={sections} steps={data.flow.steps} {speechResult} />
-	{:else}
-    <DraftPanel sections={sections} speechResult={speechResult} />
-    <DraftOptions />
-	{/if}
+		<PreviewPanel bind:sections steps={data.flow.steps} />
+	</div>
+
+	<div class={!draftMode ? 'hidden' : 'contents'}>
+		<DraftPanel {sections} {speechResult} bind:speechHistory {loading} />
+		{#if openedMutation !== undefined}
+			<DraftMutation mutation={openedMutation} back={() => (openedMutation = undefined)} />
+		{:else}
+			<DraftOptions bind:openedMutation {mutations} />
+		{/if}
+	</div>
 </form>
 
 <style lang="scss">
@@ -68,6 +177,14 @@
 
 		.progress-bar {
 			grid-column: 1 / -1;
+		}
+
+		.hidden {
+			display: none !important;
+		}
+
+		.contents {
+			display: contents;
 		}
 	}
 </style>

@@ -1,11 +1,9 @@
 <script lang="ts">
 	import type { Step } from '$lib/flows';
-	import DraftPanel from './draft-panel.svelte';
 	import PromptPreview from './prompt-preview.svelte';
 	import SpeechStructureTab from './speech-structure-tab.svelte';
 	import TabMenu from './tab-menu/tab-menu.svelte';
 
-	export let speechResult = '';
 	export let steps: Array<Step>;
   export let sections = ['Intro', 'Middle', 'Outro'];
 
@@ -22,19 +20,8 @@
 		{
 			name: 'Prompt preview',
 			disabled: false
-		},
-		{
-			name: 'Draft',
-			disabled: speechResult === ''
 		}
 	];
-
-	$: {
-		if (speechResult !== '') {
-			tabs[2].disabled = false;
-			activeTab = 2;
-		}
-	}
 </script>
 
 <div>
@@ -45,9 +32,6 @@
 		</div>
 		<div class={activeTab !== 1 ? 'hidden' : ''}>
 			<PromptPreview {sections} {steps} />
-		</div>
-		<div class={activeTab !== 2 ? 'hidden' : ''}>
-      <DraftPanel sections={sections} speechResult={speechResult} />
 		</div>
 	</section>
 </div>

@@ -36,6 +36,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"moment": "^2.29.4",
 		"node-sass": "^8.0.0"
 	}
 }
