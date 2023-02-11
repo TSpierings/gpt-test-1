@@ -22,6 +22,9 @@ const config = {
         "routes/**/*.ts": {
           "maxDuration": 50
         },
+        "**/*.ts": {
+          "maxDuration": 50
+        }
       }
     })
 	}
