@@ -10,9 +10,18 @@ const config = {
 	kit: {
 		adapter: adapter({
       "functions": {
+        "routes/[slug].ts": {
+          "maxDuration": 50
+        },
+        "routes/[slug].server.ts": {
+          "maxDuration": 50
+        },
+        "routes/*.ts": {
+          "maxDuration": 50
+        },
         "routes/**/*.ts": {
-          "maxDuration": 60
-        }
+          "maxDuration": 50
+        },
       }
     })
 	}
