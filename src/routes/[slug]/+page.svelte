@@ -8,13 +8,14 @@
 	import DraftOptions from '$lib/components/draft-options.svelte';
 	import DraftMutation from '$lib/components/draft-mutation.svelte';
 	import type { MutationOption, SpeechSection } from '$lib/flows';
+	import SummarisePanel from '$lib/components/summarise-panel.svelte';
+	import SummariseOptions from '$lib/components/summarise-options.svelte';
 
 	export let data: PageData;
 
 	let speechHistory: Array<SpeechSection> = [];
 	let speechResult = '';
-	let draftMode = false;
-	let sections = ['Intro', 'Middle', 'Outro'];
+	let sections = ['Problem', 'Solution', 'Benefit', 'Conclusion'];
 	let progress = 0;
 	let loading = false;
 
@@ -72,17 +73,12 @@
 	let parseHistory = () => '';
 
 	$: {
-		if (speechResult) {
-			draftMode = true;
-			progress = 1;
-		}
-
-    parseHistory = () =>
-		speechHistory
-			.map((section) => {
-				return `${section.title}:\n${section.history[section.cursor]}`;
-			})
-			.join('\n')
+		parseHistory = () =>
+			speechHistory
+				.map((section) => {
+					return `${section.title}:\n${section.history[section.cursor]}`;
+				})
+				.join('\n');
 	}
 </script>
 
@@ -100,7 +96,6 @@
 				if (result.type === 'success') {
 					const paragraph = result.data?.result?.choices[0]?.text;
 					const selectedSection = data.get('selected-section');
-					console.log(paragraph);
 
 					console.log(`Selected section: ${data.get('selected-section')}`);
 
@@ -109,16 +104,44 @@
 						speechSection.history.push(paragraph.trim());
 						speechSection.cursor = speechSection.history.length - 1;
 					}
+				}
+			};
+		}
 
-					speechResult = speechResult.replace(
-						RegExp(`(${data.get('selected-section')}:\n).+`),
-						`$1${paragraph.trim()}`
-					);
+		if (action.search === '?/summarise') {
+			progress = 2;
+			loading = true;
 
-					console.log(speechResult);
+			return async ({ result, update }) => {
+				if (result.type === 'success') {
+					loading = false;
+
+					let text = result.data?.result?.choices[0]?.text;
+					text = text.split('###');
+
+					speechHistory.forEach((speechSection, index) => {
+						speechSection.history.push(text[index].trim());
+						speechSection.cursor++;
+					});
+
+					speechHistory = [...speechHistory];
+
 					console.log(speechHistory);
 				}
 			};
+		}
+
+		progress = 1;
+		loading = true;
+
+		if (speechHistory.length === 0) {
+			speechHistory = sections.map((section) => {
+				return {
+					title: section,
+					history: [''],
+					cursor: 0
+				};
+			});
 		}
 
 		return async ({ result, update }) => {
@@ -126,15 +149,16 @@
 
 			if (result.type === 'success') {
 				speechResult = result.data?.result?.choices[0]?.text;
-				speechHistory = sections.map((section) => {
+        // let text = speechResult.split('###');
+				speechHistory = sections.map((section, index) => {
+          // const pro = text[index].replaceAll('\n', '');
+
 					return {
 						title: section,
-						history: [RegExp(`${section}:\n(.+)`, 'g').exec(speechResult)?.at(1) ?? ''],
+						history: [RegExp(`${section}: (.+)`, 'g').exec(speechResult)?.at(1) ?? ''],
 						cursor: 0
 					};
 				});
-				console.log(speechResult);
-				console.log(speechHistory);
 			}
 		};
 	}}
@@ -145,18 +169,23 @@
 		<ProgressBar milestones={['Basics', 'Draft', 'Summary']} {progress} />
 	</div>
 
-	<div class={draftMode ? 'hidden' : 'contents'}>
+	<div class={progress === 0 ? 'contents' : 'hidden'}>
 		<FlowPanel bind:steps={data.flow.steps} />
 		<PreviewPanel bind:sections steps={data.flow.steps} />
 	</div>
 
-	<div class={!draftMode ? 'hidden' : 'contents'}>
-		<DraftPanel {sections} {speechResult} bind:speechHistory {loading} />
+	<div class={progress === 1 ? 'contents' : 'hidden'}>
+		<DraftPanel bind:speechHistory {loading} />
 		{#if openedMutation !== undefined}
 			<DraftMutation mutation={openedMutation} back={() => (openedMutation = undefined)} />
 		{:else}
 			<DraftOptions bind:openedMutation {mutations} />
 		{/if}
+	</div>
+
+	<div class={progress === 2 ? 'contents' : 'hidden'}>
+		<SummarisePanel {loading} {speechHistory} />
+		<SummariseOptions />
 	</div>
 </form>
 

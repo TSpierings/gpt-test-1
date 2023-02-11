@@ -25,14 +25,14 @@ export const actions = {
 			`The speech has the following ${data.get('section-count')} paragraphs:\n`;
 
 		for (let i = 0; i < sections; i++) {
-			prompt += getInput(`Section ${i}`, data) + '\n';
+			prompt += data.get(`Section ${i}`) + ':\n';
 		}
 
-		prompt += '\nWrite a pitch for the given project:';
+		prompt += '\nWrite a pitch for the given project, start each paragraph with its name:';
 
 		console.log(prompt);
 
-		return { status: 200, result: foo };
+		// return { status: 200, result: foo };
 
 		const response = await fetch('https://api.openai.com/v1/completions', {
 			method: 'POST',
@@ -49,6 +49,7 @@ export const actions = {
 		});
 
 		const result = await response.json();
+    console.log(result)
 		return { status: response.status, result: result };
 	},
 
@@ -163,6 +164,37 @@ export const actions = {
 		});
 
 		const result = await response.json();
+    console.log(result);
+		return { status: response.status, result: result };
+	},
+
+  summarise: async ({ request }) => {
+		const data = await request.formData();
+
+		const prompt = 'This is a speech:\n' + data.get('speech-result') + '\n Summarise it in bullet points for each paragraph and delimit paragraphs with ###:\n';
+
+		console.log(prompt);
+
+		// return { status: 200, result: snafu };
+
+		const response = await fetch('https://api.openai.com/v1/completions', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${import.meta.env.VITE_OPENAI_SECRET_KEY}`
+			},
+			body: JSON.stringify({
+				model: 'text-davinci-003',
+				prompt: prompt,
+				temperature: 0.7,
+				max_tokens: 256
+			})
+		});
+
+		const result = await response.json();
+
+    console.log(result);
+
 		return { status: response.status, result: result };
 	}
 } satisfies Actions;
@@ -205,4 +237,33 @@ const bar = {
 		}
 	],
 	usage: { prompt_tokens: 116, completion_tokens: 225, total_tokens: 341 }
+};
+
+const snafu = {
+  id: 'cmpl-6ijBwvxVVRSDzELyUcw8dLNlbGBlv',
+  object: 'text_completion',
+  created: 1676118168,
+  model: 'text-davinci-003',
+  choices: [
+    {
+      text: '\n' +
+        'Intro:\n' +
+        '- Introducing Speeching.ai, an AI app to create the perfect speech no matter the use case.\n' +
+        '- Suitable for presentations at work, speeches at weddings and pitches at hackathons.\n' +
+        '###\n' +
+        'Middle:\n' +
+        '- Speeching.ai helps you craft a memorable and energetic speech. \n' +
+        '- Takes the guesswork out of writing a speech.\n' +
+        '- Easy to use and can be tailored to any use case.\n' +
+        '###\n' +
+        'Outro:\n' +
+        '- Speeching.ai helps create a speech that stands out from the crowd.\n' +
+        '- Leave a lasting impression.\n' +
+        '- Thank you for your time and looking forward to hearing your thoughts.',
+      index: 0,
+      logprobs: null,
+      finish_reason: 'stop'
+    }
+  ],
+  usage: { prompt_tokens: 244, completion_tokens: 136, total_tokens: 380 }
 };

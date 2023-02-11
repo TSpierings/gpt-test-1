@@ -1,54 +1,18 @@
 <script lang="ts">
 	import Divider from './generic/divider.svelte';
-	import { selectedComponent } from '$lib/stores/enhancer';
 	import type { SpeechSection } from '$lib/flows';
 	import TextareaWrapper from './generic/textarea-wrapper.svelte';
-	import moment from 'moment';
 
 	export let speechHistory: Array<SpeechSection>;
 	export let loading: boolean;
-
-	let selection: string;
-
-	selectedComponent.subscribe((value) => {
-		selection = value;
-	});
-
-	const selectComponent = (component: string) => {
-		if (!loading) {
-			selectedComponent.set(component);
-		}
-	};
-
-	const getDuration = (text: Array<SpeechSection>) => {
-		const wordCount = text
-			.map((section) => {
-				return `${section.title}:\n${section.history[section.cursor]}`;
-			})
-			.join('\n')
-			.split(' ').length;
-
-		return moment.duration(wordCount / 2.5, 'seconds').asSeconds();
-	};
-
-	$: {
-		speechHistory = [...speechHistory];
-	}
 </script>
 
 <div class="container">
-	<span class="head">
-		<h2>Draft</h2>
-		<span>{getDuration(speechHistory)} seconds</span>
-	</span>
+	<h2>Summarise</h2>
 	<Divider />
 	<div class="speech-structure">
 		{#each speechHistory as section, index (section.title)}
-			<section
-				on:click={() => selectComponent(section.title)}
-				on:keyup={undefined}
-				class={`${selection === section.title ? 'selected' : ''} ${loading ? 'loading' : ''}`}
-			>
+			<section class={`${loading ? 'loading' : ''}`}>
 				<span class="head">
 					<h4>Section {index + 1}: {section.title}</h4>
 					<div>
@@ -66,15 +30,13 @@
 						>
 					</div>
 				</span>
-				{#if loading && (selection === section.title || getDuration(speechHistory) < 1)}
+				{#if loading}
 					<span>Generating new text...</span>
 				{:else}
-					<TextareaWrapper bind:value={section.history} cursor={section.cursor} />
+					<TextareaWrapper value={section.history} cursor={section.cursor} />
 				{/if}
 			</section>
 		{/each}
-		<button class="continue" formaction='?/summarise'>Looks good!</button>
-		<input hidden name="selected-section" value={selection} />
 	</div>
 </div>
 
@@ -156,7 +118,7 @@
 			margin-bottom: 1em;
 		}
 
-    button {
+		button {
 			font: inherit;
 			font-size: x-small;
 			background-color: $highlight;
@@ -166,7 +128,7 @@
 			color: white;
 			text-align: center;
 			padding: 0.25em 0.5em;
-      height: unset;
+			height: unset;
 
 			&:hover {
 				cursor: pointer;
@@ -185,6 +147,6 @@
 	.continue {
 		max-width: 15em;
 		justify-self: flex-end;
-    padding: 0 1em;
+		padding: 0 1em;
 	}
 </style>

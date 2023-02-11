@@ -5,7 +5,7 @@
 	import TabMenu from './tab-menu/tab-menu.svelte';
 
 	export let steps: Array<Step>;
-  export let sections = ['Intro', 'Middle', 'Outro'];
+  export let sections = ['Problem', 'Solution', 'Benefit', 'Conclusion'];
 
 	let activeTab = 0;
 	const selectTab = (index: number) => {
