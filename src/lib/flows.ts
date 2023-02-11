@@ -32,7 +32,7 @@ export interface SpeechSection {
 
 export const Flows: Array<Flow> = [
 	{
-		title: 'Pitch',
+		title: 'Hackathon pitch',
 		description: 'Create the perfect pitch for a hackathon project',
 		image: 'A.jpg',
 		steps: [
