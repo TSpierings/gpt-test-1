@@ -1,24 +1,43 @@
 <script lang="ts">
 	import Divider from './generic/divider.svelte';
 	import { selectedComponent } from '$lib/stores/enhancer';
+	import { jsPDF } from 'jspdf';
+	import type { SpeechSection } from '$lib/flows';
+
+	export let speechHistory: Array<SpeechSection>;
 
 	let selection: string;
 
 	selectedComponent.subscribe((value) => {
 		selection = value;
 	});
+
+	const print = () => {
+		const pdf = new jsPDF({
+			orientation: 'l',
+			unit: 'mm',
+			format: 'a6',
+			putOnlyUsedFonts: true
+		});
+
+		speechHistory.forEach((section, index) => {
+			pdf.text(section.history[section.history.length - 1], 20, 20, { maxWidth: 110 });
+			if (index < speechHistory.length - 1) {
+				pdf.addPage();
+			}
+		});
+
+		pdf.save('pitch.pdf');
+	};
 </script>
 
 <div class="container">
 	<h2>Options</h2>
 	<Divider />
 	<div class="grid">
-    <p>Do something</p>
-		{#if selection === ''}
-			<h4>Select a section to edit</h4>
-		{:else}
-      <button formaction='?/summarise'>Try again</button>
-		{/if}
+		<p>Do something</p>
+    <button formaction="?/summarise">Try again</button>
+    <button on:click={print} type="button">Save PDF</button>
 	</div>
 </div>
 
@@ -36,7 +55,7 @@
 		height: fit-content;
 	}
 
-  button {
+	button {
 		font: inherit;
 		background-color: $highlight;
 		font-weight: bold;
@@ -53,14 +72,15 @@
 		}
 	}
 
-	h2, p {
+	h2,
+	p {
 		margin: 0;
 		padding: 0;
 	}
 
-  p {
-    margin-bottom: 0.5em;
-  }
+	p {
+		margin-bottom: 0.5em;
+	}
 
 	.grid {
 		display: grid;

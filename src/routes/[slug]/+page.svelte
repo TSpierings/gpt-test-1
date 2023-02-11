@@ -185,7 +185,7 @@
 
 	<div class={progress === 2 ? 'contents' : 'hidden'}>
 		<SummarisePanel {loading} {speechHistory} />
-		<SummariseOptions />
+		<SummariseOptions {speechHistory}/>
 	</div>
 </form>
 
