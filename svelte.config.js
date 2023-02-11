@@ -8,7 +8,13 @@ const config = {
 	preprocess: vitePreprocess(),
 
 	kit: {
-		adapter: adapter()
+		adapter: adapter({
+      "functions": {
+        "api/test.js": {
+          "maxDuration": 60
+        }
+      }
+    })
 	}
 };
 
