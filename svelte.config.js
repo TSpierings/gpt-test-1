@@ -10,7 +10,7 @@ const config = {
 	kit: {
 		adapter: adapter({
       "functions": {
-        "api/test.js": {
+        "routes/**/*.ts": {
           "maxDuration": 60
         }
       }
