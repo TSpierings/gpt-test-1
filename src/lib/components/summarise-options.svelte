@@ -20,12 +20,12 @@
 			putOnlyUsedFonts: true
 		});
 
-		speechHistory.forEach((section, index) => {
-			pdf.text(section.history[section.history.length - 1], 20, 20, { maxWidth: 110 });
-			if (index < speechHistory.length - 1) {
-				pdf.addPage();
-			}
-		});
+
+    pdf.setFontSize(12);
+
+		const text = speechHistory.map((section, index) => section.history[section.history.length - 1]).join('\n\n');
+
+    pdf.text(text, 10, 10, { maxWidth: 130 });
 
 		pdf.save('pitch.pdf');
 	};
@@ -35,7 +35,6 @@
 	<h2>Options</h2>
 	<Divider />
 	<div class="grid">
-		<p>Do something</p>
     <button formaction="?/summarise">Try again</button>
     <button on:click={print} type="button">Save PDF</button>
 	</div>

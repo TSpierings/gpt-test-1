@@ -10,17 +10,21 @@ export const actions = {
 
 		const sections = parseInt(data.get('section-count')?.toString() ?? '');
 
+    console.log(data);
+
+    console.log(data.get('team-name'));
+
 		let prompt =
 			'You are a speechwriter writing energetic, memorable pitches.\n' +
-			getInput('Team name', data) +
+			'Team name: ' + data.get('team-name') +
 			'\n' +
-			getInput('Target audience', data) +
+			'Target audience: ' + data.get('target-audience') +
 			'\n' +
-			getInput('Project description', data) +
+			'Tone of voice: ' + data.get('voice-tone') +
 			'\n' +
-			getInput('Speech goal', data) +
+			'Description: ' + data.get('description') +
 			'\n' +
-			getInput('Speech length', data) +
+			'What makes us stand out: ' + data.get('standout') +
 			'\n' +
 			`The speech has the following ${data.get('section-count')} paragraphs:\n`;
 

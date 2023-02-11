@@ -11,7 +11,7 @@
 <Divider />
 <div class="grid">
 	{#each dataFields as field}
-		<TextInputField label={field.label} bind:value={field.value} rows={field.rows} />
+		<TextInputField label={field.label} bind:value={field.value} rows={field.rows} name={field.name} />
 	{/each}
 </div>
 

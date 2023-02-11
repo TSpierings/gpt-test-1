@@ -20,14 +20,14 @@ export interface MutationOption {
 	code: string;
 	title: string;
 	description: string;
-  placeholder: string;
-  enabled: boolean;
+	placeholder: string;
+	enabled: boolean;
 }
 
 export interface SpeechSection {
-  title: string;
-  history: Array<string>;
-  cursor: number;
+	title: string;
+	history: Array<string>;
+	cursor: number;
 }
 
 export const Flows: Array<Flow> = [
@@ -43,45 +43,37 @@ export const Flows: Array<Flow> = [
 						name: 'team-name',
 						label: 'Team name',
 						rows: 1,
-						value: 'Speeching.ai'
+						value: ''
 					},
 					{
 						name: 'target-audience',
-						label: 'Target audience',
+						label: 'Tell us something about your audience',
 						rows: 4,
-						value: 'A panel of investors at a hackathon event'
+						value: 'The audience consists of fellow hackathon participants and some judges'
+					},
+					{
+						name: 'voice-tone',
+						label: 'Tone of voice',
+						rows: 4,
+						value: 'informal'
+					},
+					{
+						name: 'description',
+						label: 'Can you describe your idea, the more detail the better!',
+						rows: 4,
+						value: ''
+					},
+					{
+						name: 'standout',
+						label: 'What makes your idea stand out? ',
+						rows: 4,
+						value: 'The audience consists of fellow hackathon participants and some judges'
 					}
 				]
 			},
 			{
 				title: 'Description',
-				inputs: [
-					{
-						name: 'description',
-						label: 'Project description',
-						rows: 6,
-						value:
-							'Speeching.ai is an AI app that helps a person create a speech for a given use case'
-					},
-					{
-						name: 'speech-goal',
-						label: 'Speech goal',
-						rows: 6,
-						value: 'Show people at the event how cool our idea is'
-					},
-					{
-						name: 'extra-description-info',
-						label: 'Extra description',
-						rows: 4,
-						value: ''
-					},
-					{
-						name: 'speech-length',
-						label: 'Speech length',
-						rows: 1,
-						value: 'The speech can last 5 minutes'
-					}
-				]
+				inputs: []
 			}
 		]
 	},
