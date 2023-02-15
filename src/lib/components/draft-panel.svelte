@@ -73,7 +73,7 @@
 				{/if}
 			</section>
 		{/each}
-		<button class="continue" formaction='?/summarise'>Looks good!</button>
+		<button disabled={loading} class="continue" formaction='?/summarise'>Looks good!</button>
 		<input hidden name="selected-section" value={selection} />
 	</div>
 </div>
@@ -107,6 +107,12 @@
 			background-color: lighten($highlight, 5%);
 			color: white;
 		}
+
+    &:disabled {
+      cursor: unset;
+      background-color: $shade-5;
+      color: $shade-4;
+    }
 	}
 
 	@media (min-width: 768px) {
