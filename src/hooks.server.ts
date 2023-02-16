@@ -3,11 +3,12 @@ import GitHub from '@auth/core/providers/github';
 import Google from '@auth/core/providers/google';
 import { redirect, type Handle } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
+import { start_mongo } from '$db/mongo';
 
 /**
- * This protects all server requests under the given routes automatically. 
- * It doesn't run for client-side routes, only requests made to server pages. 
- * If a user shpuldn't see something after logging out, make sure to check the 
+ * This protects all server requests under the given routes automatically.
+ * It doesn't run for client-side routes, only requests made to server pages.
+ * If a user shpuldn't see something after logging out, make sure to check the
  * session data on pageload.
  */
 async function authorization({ event, resolve }: { event: any; resolve: any }) {
@@ -36,11 +37,19 @@ export const handle: Handle = sequence(
 				clientId: import.meta.env.VITE_GITHUB_ID,
 				clientSecret: import.meta.env.VITE_GITHUB_SECRET
 			}) as any,
-      Google({
+			Google({
 				clientId: import.meta.env.VITE_GOOGLE_ID,
 				clientSecret: import.meta.env.VITE_GOOGLE_SECRET
-			}) as any,
+			}) as any
 		]
 	}),
 	authorization
 );
+
+start_mongo()
+	.then(() => {
+		console.log('Mongo started');
+	})
+	.catch((e: Error) => {
+		console.error(e);
+	});

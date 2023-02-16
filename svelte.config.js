@@ -26,7 +26,10 @@ const config = {
           "maxDuration": 50
         }
       }
-    })
+    }),
+    alias: {
+			$db: './src/db',
+		}
 	}
 };
 

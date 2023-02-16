@@ -40,6 +40,7 @@
 		"@auth/sveltekit": "^0.2.1",
 		"jspdf": "^2.5.1",
 		"moment": "^2.29.4",
+		"mongodb": "^5.0.1",
 		"node-sass": "^8.0.0"
 	}
 }
