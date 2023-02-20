@@ -19,6 +19,20 @@
 		src: url('/prox.otf');
 	}
 
+	:global(button) {
+		all: unset;
+		cursor: pointer;
+
+		font-family: 'proximanova-regular', sans-serif;
+		font-style: normal;
+		font-weight: 100;
+	}
+
+  :global(h1, h2, h3, h4, p) {
+    margin: 0;
+    padding: 0;
+  }
+
 	* {
 		font-family: 'proximanova-regular', sans-serif;
 		font-style: normal;

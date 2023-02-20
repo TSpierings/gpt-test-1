@@ -12,11 +12,12 @@ import { start_mongo } from '$db/mongo';
  * session data on pageload.
  */
 async function authorization({ event, resolve }: { event: any; resolve: any }) {
-	// Protect any routes under /authenticated
-	if (event.url.pathname.startsWith('/authenticated')) {
+	// Protect any routes under /me
+	if (event.url.pathname.startsWith('/me')) {
 		const session = await event.locals.getSession();
+
 		if (!session) {
-			throw redirect(303, '/auth');
+			throw redirect(303, '/auth/login');
 		}
 	}
 
