@@ -4,7 +4,7 @@
 </script>
 
 <li>
-	<a href="{title.toLowerCase()}">
+	<a href="{title}">
 		<h2>{title}</h2>
 		<div class="divider" />
 		<p>{description}</p>

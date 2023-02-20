@@ -12,8 +12,8 @@ import { start_mongo } from '$db/mongo';
  * session data on pageload.
  */
 async function authorization({ event, resolve }: { event: any; resolve: any }) {
-	// Protect any routes under /me
-	if (event.url.pathname.startsWith('/me')) {
+	// Protect any routes under /me and /api
+	if (event.url.pathname.startsWith('/me') || event.url.pathname.startsWith('/api')) {
 		const session = await event.locals.getSession();
 
 		if (!session) {

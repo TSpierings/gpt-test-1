@@ -1,5 +1,4 @@
 <script>
-	import ProgressBar from '$lib/components/generic/progress-bar.svelte';
 	import Header from '../lib/header.svelte';
 </script>
 
@@ -28,9 +27,45 @@
 		font-weight: 100;
 	}
 
-  :global(h1, h2, h3, h4, p) {
-    margin: 0;
-    padding: 0;
+	:global(.button) {
+		background-color: $highlight;
+		font-weight: bold;
+		border: none;
+		border-radius: 0.5em;
+		color: white;
+		text-align: center;
+		height: 2em;
+		padding: 0 1em;
+
+		&:hover {
+			cursor: pointer;
+			background-color: lighten($highlight, 5%);
+			color: white;
+		}
+
+		&:disabled {
+			cursor: unset;
+			background-color: $shade-5;
+			color: $shade-4;
+		}
+	}
+
+	:global(h1, h2, h3, h4, p) {
+		margin: 0;
+		padding: 0;
+	}
+
+	:global(input) {
+		all: unset;
+
+		font-family: 'proximanova-regular', sans-serif;
+		font-style: normal;
+		font-weight: 100;
+		font-size: small;
+	}
+
+  :global(.hidden) {
+    display: none;
   }
 
 	* {

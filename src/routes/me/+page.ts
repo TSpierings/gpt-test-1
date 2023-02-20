@@ -1,13 +1,9 @@
 import type { Speech } from '$lib/speeches/speech';
 import type { PageLoad } from './$types';
 
-type SpeechResult = {
-	speeches: Array<Speech>;
-};
-
-export const load = (async ({ fetch }): Promise<SpeechResult> => {
+export const load = (async ({ fetch }) => {
 	const res = await fetch(`/api/speeches`);
 	const speeches = await res.json();
 
-	return { speeches };
+	return { speeches: speeches as Speech[] };
 }) satisfies PageLoad;

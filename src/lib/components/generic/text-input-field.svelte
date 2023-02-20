@@ -3,19 +3,19 @@
 	export let rows: number = 4;
 </script>
 
-<p>
+<div class="input-field">
 	<label for={label}>{label}</label>
 	{#if rows === 1}
 		<input name={name} bind:value type="text" placeholder="Your input here" />
 	{:else}
 		<textarea name={name} {rows} bind:value placeholder="Your input here" />
 	{/if}
-</p>
+</div>
 
 <style lang="scss">
 	@use '/src/lib/colors.scss' as *;
 
-	p {
+	.input-field {
 		display: flex;
 		flex-direction: column;
 		margin: 0;

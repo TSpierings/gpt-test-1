@@ -10,8 +10,7 @@ export const load: PageServerLoad = async (event) => {
 };
 
 export const actions = {
-	create: async ({ request, locals }) => {
-		// const data = await request.formData();
+	create: async ({ locals }) => {
 		const session = await locals.getSession();
 
 		if (!session?.user?.email) {
@@ -34,7 +33,6 @@ export const actions = {
 			throw error(500, 'Problem inserting into DB');
 		}
 
-		console.log(`Created ${newSpeech.insertedId}`);
-		return { result: 'yes' };
+		return { result: newSpeech.insertedId };
 	}
 } satisfies Actions;

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import Panel from '$lib/components/generic/panel.svelte';
 	import type { PageData } from './$types';
 
@@ -6,21 +7,23 @@
 	let { speeches } = data;
 </script>
 
-<div id="speech-list">
+<div class="speech-list">
 	<form method="post" action="?/create">
-		<button id="create-speech"> Create new speech </button>
+		<button class="create-speech"> Create new speech </button>
 	</form>
 	{#each speeches as speech}
-		<Panel title={speech.inputs.title} description="An empty speech" />
+    <button type="button" on:click={() => goto(`/me/speech/${speech._id}`)} class="contents">
+      <Panel title={speech.inputs.title} description="An empty speech" />
+    </button>
 	{/each}
 </div>
 
 <style lang="scss">
 	@use '/src/lib/colors.scss' as *;
 
-	#speech-list {
+	.speech-list {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, 20em);
+		grid-template-columns: repeat(auto-fit, minmax(15em, 1fr));
 		gap: 2em;
 		margin: 1.5em;
 
@@ -28,16 +31,20 @@
 			display: contents;
 		}
 
-		#create-speech {
+		.create-speech {
 			text-align: center;
 			border-radius: 2em;
 			border: 2px dashed lighten($shade-1, 40%);
-			color: lighten($shade-1, 40%);
+      min-height: 5em;
 
 			&:hover {
 				border-color: $highlight;
 				color: $highlight;
 			}
 		}
+
+    .contents {
+      display: contents;
+    }
 	}
 </style>

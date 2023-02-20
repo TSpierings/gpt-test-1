@@ -15,8 +15,6 @@ export const GET = (async ({ locals }) => {
 		})
 		.toArray();
 
-	console.log(data);
-
 	const result = JSON.stringify(data);
 
 	return new Response(result);

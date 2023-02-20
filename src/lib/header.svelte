@@ -20,6 +20,7 @@
 
 			{#if expanded}
 				<div id="user-menu-options" use:clickOutside={() => toggleMenu(false)}>
+          <a href="/me">My speeches</a>
 					<a href="/" on:click={signOut}>Sign out</a>
 				</div>
 			{/if}
@@ -80,7 +81,7 @@
 			box-shadow: 0px 0.1em 0.1em rgba(0, 0, 0, 0.1);
 
 			a {
-				padding: 0 0.5em;
+				padding: 0.5em;
 			}
 		}
 	}

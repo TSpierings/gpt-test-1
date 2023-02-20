@@ -1,6 +1,18 @@
 <script lang="ts">
 	export let milestones = ['Default'];
 	export let progress = 0;
+
+	const getBarClass = (index: number) => {
+		if (progress > index) {
+			return 'full';
+		}
+
+		if (progress > index - 1) {
+			return 'half';
+		}
+
+		return '';
+	};
 </script>
 
 <div class="wrapper">
@@ -14,7 +26,7 @@
 		{#each milestones as _, index}
 			<div class={progress > index - 1 ? 'circle reached' : 'circle'} />
 			{#if index < milestones.length - 1}
-				<div class={progress > index - 1 ? 'bar reached' : 'bar'} />
+				<div class={`bar ${getBarClass(index)}`} />
 			{/if}
 		{/each}
 	</div>
@@ -66,12 +78,12 @@
 				border: 0.15em solid $shade-4;
 				border-radius: 50%;
 
-        &.reached {
-          min-height: 0.5em;
-          min-width: 0.5em;
-          background-color: $shade-7;
-          border: 0.25em solid $highlight;
-        }
+				&.reached {
+					min-height: 0.5em;
+					min-width: 0.5em;
+					background-color: $shade-7;
+					border: 0.25em solid $highlight;
+				}
 			}
 
 			.bar {
@@ -79,12 +91,17 @@
 				height: 2px;
 				background-color: $shade-4;
 
-        &.reached {
-          background-color: $highlight;
+				&.full {
+					background-color: $highlight;
 
-          background: $highlight;
-          background: linear-gradient(90deg, $highlight 0%, $highlight 30%, $shade-4 100%);
-        }
+					background: $highlight;
+				}
+
+				&.half {
+					background-color: $highlight;
+
+					background: linear-gradient(90deg, $highlight 0%, $highlight 30%, $shade-4 100%);
+				}
 			}
 		}
 	}

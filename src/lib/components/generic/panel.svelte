@@ -31,8 +31,8 @@
 		color: black;
 		border-radius: 2em;
 
-    h2 {
-      margin-bottom: 0.5em;
+    span {
+      margin-top: 0.5em;
     }
 	}
 </style>
