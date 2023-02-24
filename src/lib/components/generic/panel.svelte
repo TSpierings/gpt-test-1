@@ -29,7 +29,6 @@
 		padding: 1.5em;
 		background-color: $shade-7;
 		color: black;
-		border-radius: 2em;
 
     span {
       margin-top: 0.5em;

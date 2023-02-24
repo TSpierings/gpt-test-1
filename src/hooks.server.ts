@@ -12,11 +12,12 @@ import { start_mongo } from '$db/mongo';
  * session data on pageload.
  */
 async function authorization({ event, resolve }: { event: any; resolve: any }) {
-	// Protect any routes under /me and /api
-	if (event.url.pathname.startsWith('/me') || event.url.pathname.startsWith('/api')) {
+	// Protect any routes under /api
+	if (event.url.pathname.startsWith('/api')) {
 		const session = await event.locals.getSession();
 
 		if (!session) {
+      console.log('Illegal access detected');
 			throw redirect(303, '/auth/login');
 		}
 	}

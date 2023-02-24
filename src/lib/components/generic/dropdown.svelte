@@ -40,20 +40,24 @@
 		display: flex;
 		flex-direction: column;
 		margin: 0;
+    flex: 1;
 
 		label {
 			margin-bottom: 0.4em;
 			font-weight: bold;
+      color: $shade-3-5;
+      font-size: 12px;
+      text-transform: uppercase;
 		}
 
 		.dropdown-value {
 			flex: 1;
 			border: 1px solid $shade-4;
 			outline: none;
-			border-radius: 0.5em;
+			border-radius: 2px;
 			padding: 0.5em;
 			cursor: pointer;
-			font-size: small;
+      font-size: 16px;
 
 			&.focused {
 				border-color: $highlight;
@@ -68,13 +72,14 @@
 			width: 100%;
 			background-color: $shade-7;
 			border: 1px solid $shade-5;
-			margin-top: 0.5em;
-			border-radius: 1em;
-			box-shadow: 0px 0.1em 0.1em rgba(0, 0, 0, 0.1);
+			margin-top: 8px;
+			border-radius: 2px;
+			box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+      z-index: 1;
 
 			button {
-				padding: 1em 0.5em;
-				font-size: small;
+				padding: 0.5em 0.5em;
+        font-size: 16px;
 				border-bottom: 1px solid $shade-5;
 
 				&:hover {
@@ -82,12 +87,12 @@
 				}
 
 				&:first-of-type {
-					border-radius: 1em 1em 0 0;
+					border-radius: 2px 2px 0 0;
 				}
 
 				&:last-of-type {
 					border-bottom: unset;
-					border-radius: 0 0 1em 1em;
+					border-radius: 0 0 2px 2px;
 				}
 			}
 		}

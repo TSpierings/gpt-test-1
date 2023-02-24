@@ -18,24 +18,36 @@
 		src: url('/prox.otf');
 	}
 
+  @font-face {
+		font-family: 'proximanova-bold';
+		font-style: normal;
+		font-weight: 500;
+		src: url('/prox-bold.otf');
+	}
+
 	:global(button) {
 		all: unset;
 		cursor: pointer;
 
 		font-family: 'proximanova-regular', sans-serif;
 		font-style: normal;
-		font-weight: 100;
+		font-weight: 500;
 	}
 
 	:global(.button) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 		background-color: $highlight;
-		font-weight: bold;
 		border: none;
-		border-radius: 0.5em;
+		border-radius: 4px;
 		color: white;
 		text-align: center;
-		height: 2em;
-		padding: 0 1em;
+		height: 2rem;
+		padding: 0 1rem;
+    text-transform: uppercase;
+    font-size: 14px;
+		font-family: 'proximanova-bold', 'proximanova-regular', sans-serif;
 
 		&:hover {
 			cursor: pointer;
@@ -50,10 +62,23 @@
 		}
 	}
 
+  :global(.button.cancel) {
+    background-color: $shade-4;
+    color: black;
+
+    &:hover {
+			background-color: lighten($shade-4, 5%);
+		}
+	}
+
 	:global(h1, h2, h3, h4, p) {
 		margin: 0;
 		padding: 0;
 	}
+
+  :global(h1, h2) {
+		font-family: 'proximanova-bold', 'proximanova-regular', sans-serif;
+  }
 
 	:global(input) {
 		all: unset;

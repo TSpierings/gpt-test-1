@@ -8,12 +8,10 @@
 </script>
 
 <div class="speech-list">
-	<form method="post" action="?/create">
-		<button class="create-speech"> Create new speech </button>
-	</form>
+  <button class="create-speech" type="button" on:click={() => goto('/speeches/new')}> Create new speech </button>
 	{#each speeches as speech}
     <button type="button" on:click={() => goto(`/me/speech/${speech._id}`)} class="contents">
-      <Panel title={speech.inputs.title} description="An empty speech" />
+      <Panel title={speech.title} description="An empty speech" />
     </button>
 	{/each}
 </div>
@@ -33,7 +31,6 @@
 
 		.create-speech {
 			text-align: center;
-			border-radius: 2em;
 			border: 2px dashed lighten($shade-1, 40%);
       min-height: 5em;
 
