@@ -13,13 +13,13 @@
 <header>
 	<a href="/"><img src="/logo.png" alt="logo" /></a>
 
-	<div id="user-menu" on:click={() => toggleMenu(!expanded)} on:keypress={() => toggleMenu(!expanded)}>
+	<div class="user-menu" on:click={() => toggleMenu(!expanded)} on:keypress={() => toggleMenu(!expanded)}>
 		{#if $page.data.session}
-			<span>{$page.data.session.user?.name}</span>
+			<span class="name">{$page.data.session.user?.name}</span>
 			<img src={$page.data.session.user?.image} alt="User avatar" />
 
 			{#if expanded}
-				<div id="user-menu-options" use:clickOutside={() => toggleMenu(false)}>
+				<div class="user-menu-options" use:clickOutside={() => toggleMenu(false)}>
           <a href="/me">My speeches</a>
 					<a href="/" on:click={signOut}>Sign out</a>
 				</div>
@@ -41,6 +41,12 @@
 		background-color: $shade-7;
 		box-shadow: 0px 0.1em 0.1em rgba(0, 0, 0, 0.1);
 		margin-bottom: 0.1em;
+    max-width: 100vw;
+    /* overflow-x: hidden; */
+
+    @media (max-width: 768px) {
+      padding: 0.5rem;
+		}
 
 		a {
 			flex: 1;
@@ -53,7 +59,7 @@
 			}
 		}
 
-		#user-menu {
+		.user-menu {
 			display: flex;
 			align-items: center;
 			cursor: pointer;
@@ -64,9 +70,15 @@
 				height: 2em;
 				border-radius: 50%;
 			}
+
+      .name {
+        @media (max-width: 768px) {
+          display: none;
+        }
+      }
 		}
 
-		#user-menu-options {
+		.user-menu-options {
 			display: flex;
 			flex-direction: column;
 			align-items: flex-end;
@@ -76,12 +88,17 @@
 			background-color: $shade-7;
 			border: 1px solid $shade-5;
 			margin-top: 0.5em;
-			padding: 0.5em;
-			border-radius: 1em;
+			border-radius: 4px;
 			box-shadow: 0px 0.1em 0.1em rgba(0, 0, 0, 0.1);
+      white-space: nowrap;
 
 			a {
-				padding: 0.5em;
+				padding: 0.5rem 1rem;
+        border-bottom: 1px solid $shade-5;
+
+        &:last-of-type {
+          border: none;
+        }
 			}
 		}
 	}

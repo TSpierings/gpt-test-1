@@ -10,7 +10,7 @@
 <div class="speech-list">
   <button class="create-speech" type="button" on:click={() => goto('/speeches/new')}> Create new speech </button>
 	{#each speeches as speech}
-    <button type="button" on:click={() => goto(`/me/speech/${speech._id}`)} class="contents">
+    <button type="button" on:click={() => goto(`/speeches/${speech._id}`)} class="contents">
       <Panel title={speech.title} description="An empty speech" />
     </button>
 	{/each}
@@ -24,10 +24,6 @@
 		grid-template-columns: repeat(auto-fit, minmax(15em, 1fr));
 		gap: 2em;
 		margin: 1.5em;
-
-		form {
-			display: contents;
-		}
 
 		.create-speech {
 			text-align: center;

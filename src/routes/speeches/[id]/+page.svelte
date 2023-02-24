@@ -1,22 +1,19 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { goto } from '$app/navigation';
-	import Divider from '$lib/components/generic/divider.svelte';
-	import Panel from '$lib/components/generic/panel.svelte';
-  import ProgressContainer from '$lib/components/generic/progress-container.svelte';
+	import ProgressContainer from '$lib/components/generic/progress-container.svelte';
 	import type { PageData } from './$types';
 	import GetStarted from './components/get-started.svelte';
-  import SelectTopics from './components/select-topics.svelte';
-  import TopicContent from './components/topic-content.svelte';
-  import TopicRating from './components/topic-rating.svelte';
+	import SelectTopics from './components/select-topics.svelte';
+	import TopicContent from './components/topic-content.svelte';
+	import TopicRating from './components/topic-rating.svelte';
 
 	export let data: PageData;
 	let { speech } = data;
 
-  let selected = 3;
-  let tips = [];
+  let selected = 0;
+  let tips: Array<string> = [];
   $: {
-    tips = ['', `Pro tip: select ${Math.max(0, 3 - speech.topics.length)} more topics`, 'You\'re almost there!, we promise...', ''];
+    tips = ['', `Pro tip: select ${Math.max(0, 3 - speech?.topics?.length ?? 0)} more topics`, 'You\'re almost there!, we promise...', ''];
   }
 
 </script>
@@ -63,7 +60,8 @@
 
 		@media (max-width: 768px) {
       align-items: unset;
-			margin: 0.5rem
+			margin: 0.5rem;
+      flex: 1;
 		}
 	}
 </style>

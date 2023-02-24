@@ -54,7 +54,6 @@
 			display: flex;
 			align-items: center;
 			flex: 1;
-			cursor: pointer;
 			gap: 4px;
 
 			span {
@@ -69,6 +68,7 @@
 				height: 1.5rem;
 				border: 1px solid $shade-5;
 				border-radius: 2px;
+			  cursor: pointer;
 
 				img {
 					filter: grayscale(1);

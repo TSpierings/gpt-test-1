@@ -1,42 +1,59 @@
 <script>
+	import { goto } from '$app/navigation';
 	import Divider from '$lib/components/generic/divider.svelte';
-	import { Flows } from '$lib/flows';
-	import CategoryCard from '../lib/components/generic/category-card.svelte';
 </script>
 
 <div class="container">
-	<div class="welcome">
-		<h2>Welcome to the Speeching.ai pitch engine</h2>
+	<button class="item" on:click={() => goto('/speeches/new')}>
+		<h2>Start creating a new speech!</h2>
 		<Divider />
-		<p>Below are a set of speech flows you can try out</p>
-	</div>
-	{#each Flows as flow}
-		<CategoryCard title={flow.title} description={flow.description} />
-	{/each}
+		<p>Click to go the speeching engine</p>
+	</button>
+	<button class="item" on:click={() => goto('/speeches')}>
+		<h2>My speeches</h2>
+		<Divider />
+		<p>Click to go your saved speeches</p>
+	</button>
 </div>
 
 <style lang="scss">
 	@use '/src/lib/colors.scss' as *;
 
 	.container {
-		margin: 2em;
-		padding: 0;
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-		gap: 2em;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin: 2rem;
+		gap: 2rem;
+		flex: 1;
 
-		.welcome {
+		@media (max-width: 768px) {
+			flex-direction: column;
+			justify-content: unset;
+			align-items: unset;
+
+			.item {
+				flex: 1;
+			}
+		}
+
+		.item {
 			display: flex;
 			flex-direction: column;
+			align-items: center;
+			justify-content: space-evenly;
 			background-color: $shade-7;
 			grid-column: 1 / -1;
-			border-radius: 2em;
-			padding: 1.5em;
+			border: 1px solid $shade-5;
+			border-radius: 4px;
+			padding: 1.5rem;
+			min-height: 100px;
+			cursor: pointer;
+			text-align: center;
 
-			h2,
-			p {
-				margin: 0;
-				padding: 0;
+			&:hover {
+				background-color: $shade-6;
+				border-color: $highlight;
 			}
 		}
 	}
