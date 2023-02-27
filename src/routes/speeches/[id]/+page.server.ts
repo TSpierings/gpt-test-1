@@ -1,6 +1,7 @@
 import { speeches } from '$db/speeches';
+import { compose } from '$lib/speeches/composer';
 import { SpeechTypes, ToneOfVoice, type Speech } from '$lib/speeches/speech';
-import { error } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 import { ObjectId } from 'mongodb';
 import type { Actions, PageServerLoad } from './$types';
 
@@ -19,7 +20,8 @@ export const load = (async ({ locals, params }) => {
 				toneOfVoice: ToneOfVoice.CasualAndModest,
 				type: SpeechTypes.HackathonPitch,
 				userEmail: '',
-				topics: []
+				topics: [],
+				paragraphs: []
 			} as Speech
 		};
 	}
@@ -71,5 +73,24 @@ export const actions = {
 		return {
 			status: result.ok === 1 ? 200 : 500
 		};
+	},
+	
+	'create-draft': async ({ locals, request }) => {
+		const session = await locals.getSession();
+		const data = await request.formData();
+
+		const speechData = data.get('json-speech')?.toString();
+
+		if (!speechData) {
+			throw error(500, 'No speech data found');
+		}
+
+		const speech = JSON.parse(speechData)
+
+		const prompt = compose(speech);
+
+		console.log(prompt);
+
+		return { status: 200 };
 	}
 } satisfies Actions;

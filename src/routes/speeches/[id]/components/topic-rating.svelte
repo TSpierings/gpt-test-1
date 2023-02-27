@@ -65,6 +65,7 @@
 				align-items: center;
 				justify-content: center;
 				width: 1.5rem;
+				min-width: 1.5rem;
 				height: 1.5rem;
 				border: 1px solid $shade-5;
 				border-radius: 2px;

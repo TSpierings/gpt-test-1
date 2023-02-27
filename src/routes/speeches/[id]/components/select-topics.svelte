@@ -18,7 +18,9 @@
 				{
 					title: topic,
 					value: '',
-					importance: 3
+					importance: 3,
+					content: [],
+					cursor: -1
 				}
 			];
 		}

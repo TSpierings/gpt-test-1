@@ -11,6 +11,8 @@
 	export let onCancel = () => {};
 	export let onFinish = () => {};
 
+	export let canContinue = true;
+
 	let clickBack = () => {
 		if (selected > 0) {
 			selected -= 1;
@@ -37,7 +39,7 @@
 			<button class="button cancel" type="button" on:click={clickBack}
 				>{selected === 0 ? cancelText : 'Back'}</button
 			>
-			<button class="button" type="button" on:click={clickNext}
+			<button disabled={!canContinue} class="button" type="button" on:click={clickNext}
 				>{selected === items - 1 ? finishText : 'Next step'}</button
 			>
 		</div>
