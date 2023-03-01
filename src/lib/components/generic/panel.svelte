@@ -26,12 +26,12 @@
 		display: flex;
 		flex-direction: column;
 		flex: 1;
-		padding: 1.5em;
+		padding: 1.5rem;
 		background-color: $shade-7;
 		color: black;
 
     span {
-      margin-top: 0.5em;
+      margin-top: 0.5rem;
     }
 	}
 </style>

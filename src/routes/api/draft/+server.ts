@@ -1,9 +1,10 @@
+import { composeSection } from '$lib/speeches/composer';
 import type { RequestHandler } from './$types';
 
 export const POST = (async ( { request } ) => {
-  const data = await request.json();
+  const { speech, index } = await request.json();
 
-  console.log(data);
+  const prompt = composeSection(speech, index);
 
   const response = await fetch('https://api.openai.com/v1/completions', {
     method: 'POST',
@@ -13,9 +14,9 @@ export const POST = (async ( { request } ) => {
     },
     body: JSON.stringify({
       model: 'text-davinci-003',
-      prompt: 'Write a haiku about ' + data.title,
+      prompt: prompt,
       temperature: 0.7,
-      max_tokens: 50,
+      max_tokens: 250,
       stream: true
     })
   });

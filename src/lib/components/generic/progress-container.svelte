@@ -35,22 +35,23 @@
     <div class="slot">
       <slot />
     </div>		
+
+    {#if tip}
+      <span class={`tip level${tipLevel}`}>{tip}</span>
+    {/if}
 		<div class="menu">
 			<button class="button cancel" type="button" on:click={clickBack}
 				>{selected === 0 ? cancelText : 'Back'}</button
 			>
+			<div class="indicator">
+				{#each Array(items) as _, index (index)}
+					<div class={`dot ${selected === index ? 'active' : ''}`} />
+				{/each}
+			</div>
 			<button disabled={!canContinue} class="button" type="button" on:click={clickNext}
 				>{selected === items - 1 ? finishText : 'Next step'}</button
 			>
 		</div>
-    {#if tip}
-      <span class={`tip level${tipLevel}`}>{tip}</span>
-    {/if}
-	</div>
-	<div class="indicator">
-		{#each Array(items) as _, index (index)}
-			<div class={`dot ${selected === index ? 'active' : ''}`} />
-		{/each}
 	</div>
 </div>
 
@@ -60,14 +61,11 @@
 	.progress-container {
 		display: flex;
 		flex-direction: column;
-    flex: 1;
-    max-width: 500px;
-    min-height: 100%;
 
 		.content {
       display: flex;
       flex-direction: column;
-			padding: 1.5rem 3rem;
+			padding: 1.5rem 3rem 0.5rem 3rem;
 			flex: 1;
 			background-color: $shade-7;
       gap: 1.5rem;

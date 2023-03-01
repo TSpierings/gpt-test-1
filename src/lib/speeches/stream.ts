@@ -1,39 +1,5 @@
-import { currentSpeech } from './../../../../lib/stores/speech';
-import { promptResult } from "$lib/stores/speech";
+import { currentSpeech } from '../stores/speech';
 import { get } from 'svelte/store';
-
-export const readInto = async (readableStream: ReadableStream) => {
-  const reader = readableStream.pipeThrough(new TextDecoderStream()).getReader();
-  promptResult.set('');
-
-  let finished = false;
-
-  while (!finished) {
-    try {
-      if (!reader) break;
-
-      const { value, done } = await reader.read();
-      finished = done;
-
-      if (done) break;
-
-      const data = /data: (.+)/.exec(value);
-
-      if (!data || data.length < 2 || data[1] === '[DONE]') break;
-
-      const bar = JSON.parse(data[1]);
-
-      const t = bar.choices[0].text;
-
-      promptResult.update(value => value + t);
-    } catch (error) {
-      console.error(error);
-      break;
-    }
-  }
-
-  return Promise.resolve();
-}
 
 export const generateSectionContent = async (index: number) => {
   const speech = get(currentSpeech);
@@ -47,7 +13,10 @@ export const generateSectionContent = async (index: number) => {
   const response = await fetch(`/api/draft`,
     {
       method: 'POST',
-      body: JSON.stringify(topic)
+      body: JSON.stringify({
+        speech: speech,
+        index: index
+      })
     });
 
   if (!response.body) throw Error('No response body found');

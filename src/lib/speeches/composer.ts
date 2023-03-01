@@ -19,3 +19,19 @@ export const compose = (speech: Speech): string => {
 
   return prompt;
 };
+
+const sectionMatcher =
+  `Paragraph #index is about #description and is named '#title'.
+Write this paragraph:`
+
+export const composeSection = (speech: Speech, index: number): string => {
+  const topic = speech.topics[index];
+  const sauce = compose(speech);
+  let sectionPrompt = sectionMatcher;
+
+  sectionPrompt = sectionPrompt.replace('#index', (index + 1).toString());
+  sectionPrompt = sectionPrompt.replace('#description', topic.value);
+  sectionPrompt = sectionPrompt.replace('#title', topic.title);
+
+  return sauce + '\n' + sectionPrompt;
+}

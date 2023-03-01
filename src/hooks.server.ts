@@ -13,7 +13,7 @@ import { start_mongo } from '$db/mongo';
  */
 async function authorization({ event, resolve }: { event: any; resolve: any }) {
 	// Protect any routes under /api
-	if (event.url.pathname.startsWith('/api')) {
+	if (event.url.pathname.startsWith('/api/protected')) {
 		const session = await event.locals.getSession();
 
 		if (!session) {

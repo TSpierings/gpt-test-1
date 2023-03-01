@@ -45,13 +45,12 @@
 		gap: 1rem;
 
 		h2 {
-			align-self: center;
+			margin: 0.5rem 0;
 			font-weight: bolder;
 		}
 
 		p {
 			margin-bottom: 1rem;
-      text-align: center;
 		}
 
     .double {

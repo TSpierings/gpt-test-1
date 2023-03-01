@@ -51,46 +51,43 @@ export const actions = {
 	save: async ({ locals, request }) => {
 		const session = await locals.getSession();
 		const data = await request.formData();
-		const id = data.get('id');
-		const speech = data.get('speech');
+		const speech = data.get('json-speech')?.toString();
 
-		if (!id || !speech || !session?.user?.email) {
+		if (!speech || !session?.user?.email) {
 			throw error(500, 'Form data incorrect');
 		}
 
 		const speechObject = JSON.parse(speech.toString()) as Speech;
 		speechObject.dateModified = new Date();
-		speechObject.id = undefined;
 
-		const result = await speeches.findOneAndReplace(
-			{
-				_id: new ObjectId(id.toString()),
-				userEmail: session.user.email
-			},
+		let result;
+
+		// Update existing
+		if (speechObject.id) {
+			result = await speeches.findOneAndReplace(
+				{
+					_id: new ObjectId(speechObject.id.toString()),
+					userEmail: session.user.email
+				},
+				speechObject
+			);
+
+			return {
+				status: result.ok === 1 ? 200 : 500
+			};
+		}
+
+		// Add new
+		speechObject.userEmail = session.user.email;
+
+		result = await speeches.insertOne(
 			speechObject
 		);
 
-		return {
-			status: result.ok === 1 ? 200 : 500
-		};
-	},
-	
-	'create-draft': async ({ locals, request }) => {
-		const session = await locals.getSession();
-		const data = await request.formData();
-
-		const speechData = data.get('json-speech')?.toString();
-
-		if (!speechData) {
-			throw error(500, 'No speech data found');
+		if (!result.acknowledged) {
+			throw error(500, 'Problem inserting into DB');
 		}
 
-		const speech = JSON.parse(speechData)
-
-		const prompt = compose(speech);
-
-		console.log(prompt);
-
-		return { status: 200 };
+		return { id: result.insertedId.toString() };
 	}
 } satisfies Actions;
