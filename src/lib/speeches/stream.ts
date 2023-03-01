@@ -19,15 +19,11 @@ export const generateSectionContent = async (index: number) => {
       })
     });
 
-  console.log(response);
-
   if (!response.body) throw Error('No response body found');
 
   const reader = response.body.pipeThrough(new TextDecoderStream()).getReader();
 
   let finished = false;
-
-  console.log(reader);
 
   while (!finished) {
     try {
@@ -35,8 +31,6 @@ export const generateSectionContent = async (index: number) => {
 
       const { value, done } = await reader.read();
       finished = done;
-
-      console.log(value);
 
       if (done) break;
 

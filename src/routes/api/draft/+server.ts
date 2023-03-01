@@ -1,6 +1,10 @@
 import { composeSection } from '$lib/speeches/composer';
 import type { RequestHandler } from './$types';
 
+export const config = {
+  runtime: "edge",
+};
+
 export const POST = (async ( { request } ) => {
   const { speech, index } = await request.json();
 
@@ -20,8 +24,6 @@ export const POST = (async ( { request } ) => {
       stream: true
     })
   });
-
-  console.log(response);
 
   return new Response(response.body);
 }) satisfies RequestHandler;
