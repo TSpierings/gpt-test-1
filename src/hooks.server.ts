@@ -3,7 +3,7 @@ import GitHub from '@auth/core/providers/github';
 import Google from '@auth/core/providers/google';
 import { redirect, type Handle } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
-import { start_mongo } from '$db/mongo';
+// import { start_mongo } from '$db/mongo';
 
 /**
  * This protects all server requests under the given routes automatically.
@@ -48,10 +48,10 @@ export const handle: Handle = sequence(
 	authorization
 );
 
-start_mongo()
-	.then(() => {
-		console.log('Mongo started');
-	})
-	.catch((e: Error) => {
-		console.error(e);
-	});
+// start_mongo()
+// 	.then(() => {
+// 		console.log('Mongo started');
+// 	})
+// 	.catch((e: Error) => {
+// 		console.error(e);
+// 	});
