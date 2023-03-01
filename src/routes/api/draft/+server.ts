@@ -21,5 +21,7 @@ export const POST = (async ( { request } ) => {
     })
   });
 
+  console.log(response);
+
   return new Response(response.body);
 }) satisfies RequestHandler;
