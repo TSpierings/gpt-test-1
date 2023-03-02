@@ -2,7 +2,7 @@
 	import ProgressContainer from '$lib/components/generic/progress-container.svelte';
 	import type { Speech } from '$lib/speeches/speech';
 	import { currentSpeech } from '$lib/stores/speech';
-	import { generateSectionContent } from '../../../../lib/speeches/stream';
+	import { fooParser, generateSectionContent } from '../../../../lib/speeches/stream';
 	import GetStarted from './get-started.svelte';
 	import SelectTopics from './select-topics.svelte';
 	import TopicContent from './topic-content.svelte';
@@ -34,7 +34,8 @@
 	const onFinish = () => {
 		currentSpeech.set(speech);
 		speech.topics.forEach(async (topic, index) =>
-			topic.cursor < 0 ? await generateSectionContent(index) : null
+			// topic.cursor < 0 ? await generateSectionContent(index) : null
+			topic.cursor < 0 ? await fooParser(index) : null
 		);
 	};
 </script>

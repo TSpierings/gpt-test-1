@@ -1,4 +1,5 @@
 import { composeSection } from '$lib/speeches/composer';
+import { OpenAIStream } from '$lib/speeches/stream';
 import type { RequestHandler } from './$types';
 
 export const config = {
@@ -25,5 +26,6 @@ export const POST = (async ( { request } ) => {
     })
   });
 
-  return new Response(response.body);
+  const stream = await OpenAIStream(response);
+  return new Response(stream);
 }) satisfies RequestHandler;

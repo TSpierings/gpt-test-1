@@ -39,6 +39,7 @@
 	"dependencies": {
 		"@auth/core": "^0.4.0",
 		"@auth/sveltekit": "^0.2.1",
+		"eventsource-parser": "^0.1.0",
 		"jspdf": "^2.5.1",
 		"moment": "^2.29.4",
 		"node-sass": "^8.0.0"
