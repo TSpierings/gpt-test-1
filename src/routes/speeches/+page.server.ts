@@ -1,7 +1,5 @@
-import { speeches } from '$db/speeches';
-import { SpeechTypes, type Speech } from '$lib/speeches/speech';
 import { error, redirect, type Actions } from '@sveltejs/kit';
-import type { PageServerLoad } from '../me/$types';
+import type { PageServerLoad } from '../$types';
 
 export const load: PageServerLoad = async (event) => {
 	const session = await event.locals.getSession();

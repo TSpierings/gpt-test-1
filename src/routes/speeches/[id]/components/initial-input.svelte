@@ -1,14 +1,17 @@
 <script lang="ts">
 	import ProgressContainer from '$lib/components/generic/progress-container.svelte';
+	import type { PromptMatcher } from '$lib/speeches/matchers';
 	import type { Speech } from '$lib/speeches/speech';
 	import { currentSpeech } from '$lib/stores/speech';
-	import { fooParser, generateSectionContent } from '../../../../lib/speeches/stream';
+	import { generateTopic } from '$lib/speeches/stream';
 	import GetStarted from './get-started.svelte';
 	import SelectTopics from './select-topics.svelte';
 	import TopicContent from './topic-content.svelte';
 	import TopicRating from './topic-rating.svelte';
 
 	export let speech: Speech;
+	export let topics: PromptMatcher[];
+	export let speechTypes: PromptMatcher[];
 
 	let selected = 0;
 	let tips: Array<string> = [];
@@ -31,11 +34,10 @@
 		}
 	}
 
-	const onFinish = () => {
+	const onFinish = async () => {
 		currentSpeech.set(speech);
 		speech.topics.forEach(async (topic, index) =>
-			// topic.cursor < 0 ? await generateSectionContent(index) : null
-			topic.cursor < 0 ? await fooParser(index) : null
+			topic.cursor < 0 ? await generateTopic(index) : null
 		);
 	};
 </script>
@@ -50,9 +52,9 @@
 	{canContinue}
 >
 	{#if selected === 0}
-		<GetStarted bind:speech />
+		<GetStarted bind:speech {speechTypes}/>
 	{:else if selected === 1}
-		<SelectTopics bind:speech />
+		<SelectTopics bind:speech {topics}/>
 	{:else if selected === 2}
 		<TopicContent bind:speech />
 	{:else if selected === 3}

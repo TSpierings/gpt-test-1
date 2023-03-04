@@ -1,10 +1,5 @@
 import type { ObjectId } from 'mongodb';
 
-export enum SpeechTypes {
-  HackathonPitch = 'Hackathon pitch',
-  None = 'None'
-}
-
 export enum ToneOfVoice {
   CasualAndModest = 'Casual & Modest'
 }
@@ -29,7 +24,7 @@ export type Speech = {
 
   // inputs
   title: string;
-  type: SpeechTypes;
+  type: string;
   lengthInSeconds: number;
   toneOfVoice: ToneOfVoice;
   targetAudience: string;

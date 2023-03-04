@@ -1,7 +1,9 @@
 <script lang="ts">
+	import type { PromptMatcher } from '$lib/speeches/matchers';
 	import type { Speech } from '$lib/speeches/speech';
 
 	export let speech: Speech;
+	export let topics: PromptMatcher[];
 
 	const PremadeTopics = [
 		'Why you started the business',
@@ -34,14 +36,14 @@
 		be.
 	</p>
 
-	{#each PremadeTopics as topic}
+	{#each topics as topic}
 		<button
 			type="button"
-			class={`topic ${speech?.topics?.find((it) => it.title === topic) ? 'active' : ''}`}
-			on:click={() => onSelectTopic(topic)}
+			class={`topic ${speech?.topics?.find((it) => it.title === topic.title) ? 'active' : ''}`}
+			on:click={() => onSelectTopic(topic.title)}
 		>
 			<div class="checkmark"><img src="/checkmark.svg" alt="checkmark" /></div>
-			{topic}
+			{topic.title}
 		</button>
 	{/each}
 </div>

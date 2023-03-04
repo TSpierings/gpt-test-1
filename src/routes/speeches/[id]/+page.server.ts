@@ -1,49 +1,54 @@
+import { speechTypes } from '$db/speech-types';
 import { speeches } from '$db/speeches';
-import { compose } from '$lib/speeches/composer';
-import { SpeechTypes, ToneOfVoice, type Speech } from '$lib/speeches/speech';
-import { error, redirect } from '@sveltejs/kit';
+import { ToneOfVoice, type Speech } from '$lib/speeches/speech';
+import { error } from '@sveltejs/kit';
 import { ObjectId } from 'mongodb';
 import type { Actions, PageServerLoad } from './$types';
+import { topics } from '$db/topics';
 
 export const load = (async ({ locals, params }) => {
 	const session = await locals.getSession();
 
-	// If not logged in or no id given, create a new speech
-	if (!session?.user?.email || !ObjectId.isValid(params.id)) {
-		return {
-			speech: {
-				title: '',
-				dateCreated: new Date(),
-				dateModified: new Date(),
-				lengthInSeconds: 300,
-				targetAudience: '',
-				toneOfVoice: ToneOfVoice.CasualAndModest,
-				type: SpeechTypes.HackathonPitch,
-				userEmail: '',
-				topics: [],
-				paragraphs: []
-			} as Speech
-		};
+	const topicResult = await topics
+		.find({}, { projection: { _id: 0, title: 1 } })
+		.toArray();
+
+	const speechTypesResult = await speechTypes
+		.find({}, { projection: { _id: 0, title: 1 } })
+		.toArray();
+
+	let speech: Speech = {
+		title: '',
+		dateCreated: new Date(),
+		dateModified: new Date(),
+		lengthInSeconds: 300,
+		targetAudience: '',
+		toneOfVoice: ToneOfVoice.CasualAndModest,
+		type: speechTypesResult[0].title,
+		userEmail: '',
+		topics: [],
+		paragraphs: []
+	} as Speech
+
+	// If logged in and param is valid objectID, get the speech
+	if (session?.user?.email && ObjectId.isValid(params.id)) {
+		const result = await speeches.findOne(
+			{
+				_id: new ObjectId(params.id),
+				userEmail: session.user.email
+			},
+			{ projection: { _id: 0 } }
+		);
+
+		if (result) {
+			speech = { ...(result as Speech), id: params.id };
+		}
 	}
 
-	const speech = await speeches.findOne(
-		{
-			_id: new ObjectId(params.id),
-			userEmail: session.user.email
-		},
-		{ projection: { _id: 0 } }
-	);
-
-	// If no speech found for the given ID, create a new speech
-	if (!speech) {
-		return {
-			speech: {} as Speech
-		};
-	}
-
-	// Else, return the found speech for editing
 	return {
-		speech: { ...(speech as Speech), id: params.id }
+		speech: speech,
+		topics: topicResult,
+		speechTypes: speechTypesResult
 	};
 }) satisfies PageServerLoad;
 

@@ -1,9 +1,11 @@
 <script lang="ts">
 	import Dropdown from '$lib/components/generic/dropdown.svelte';
 	import TextInputField from '$lib/components/generic/text-input-field.svelte';
-	import { SpeechTypes, ToneOfVoice, type Speech } from '$lib/speeches/speech';
+	import type { PromptMatcher } from '$lib/speeches/matchers';
+	import { ToneOfVoice, type Speech } from '$lib/speeches/speech';
 
 	export let speech: Speech;
+	export let speechTypes: PromptMatcher[];
 
   let lengthOptions = ['5 mins'];
   let speechLength: string;
@@ -21,7 +23,7 @@
 	<TextInputField bind:value={speech.title} label="Title of your speech" name="inputs.title" rows={1} />
 
   <div class="double">
-    <Dropdown label="Speech type" options={Object.values(SpeechTypes)} bind:value={speech.type} />
+    <Dropdown label="Speech type" options={speechTypes.map((item) => item.title)} bind:value={speech.type} />
     <Dropdown label="Speech length" options={lengthOptions} bind:value={speechLength} />
   </div>
 

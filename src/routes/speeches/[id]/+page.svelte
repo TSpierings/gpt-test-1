@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { goto } from '$app/navigation';
 	import type { Speech } from '$lib/speeches/speech';
 	import { currentSpeech } from '$lib/stores/speech';
 	import type { PageData } from './$types';
@@ -8,7 +7,7 @@
 	import InitialInput from './components/initial-input.svelte';
 
 	export let data: PageData;
-	let { speech } = data;
+	let { speech, topics, speechTypes } = data;
 
 	currentSpeech.set(speech);
 	currentSpeech.subscribe((value: Speech) => (speech = value));
@@ -32,7 +31,7 @@
 		};
 	}}
 >
-	<InitialInput bind:speech />
+	<InitialInput bind:speech {topics} {speechTypes}/>
 	<Draft bind:speech />
 </form>
 

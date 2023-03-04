@@ -20,7 +20,8 @@
 
 			{#if expanded}
 				<div class="user-menu-options" use:clickOutside={() => toggleMenu(false)}>
-          <a href="/me">My speeches</a>
+          <a href="/speeches">My speeches</a>
+					<a href="/admin">Admin panel</a>
 					<a href="/" on:click={signOut}>Sign out</a>
 				</div>
 			{/if}
