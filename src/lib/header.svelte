@@ -2,6 +2,9 @@
 	import { page } from '$app/stores';
 	import { clickOutside } from './directives/click-outside';
   import { signOut } from '@auth/sveltekit/client';
+	import { UserRole } from './models/user';
+
+	export let role: UserRole;
 
 	let expanded = false;
 
@@ -21,7 +24,9 @@
 			{#if expanded}
 				<div class="user-menu-options" use:clickOutside={() => toggleMenu(false)}>
           <a href="/speeches">My speeches</a>
-					<a href="/admin">Admin panel</a>
+					{#if [UserRole.admin, UserRole.editor].includes(role)}
+						<a href="/admin">Admin panel</a>
+					{/if}
 					<a href="/" on:click={signOut}>Sign out</a>
 				</div>
 			{/if}

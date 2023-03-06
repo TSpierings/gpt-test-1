@@ -1,16 +1,16 @@
 import { topics } from '$db/topics';
 import type { PromptMatcher } from '$lib/speeches/matchers';
 import { redirect, type Actions } from '@sveltejs/kit';
-import type { PageServerLoad } from '../$types';
+import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async (event) => {
-	const session = await event.locals.getSession();
+export const load = (async ({ locals }) => {
+	const session = await locals.getSession();
 	if (!session?.user) throw redirect(303, '/auth/login');
 
 	const result = await topics.find({}, { projection: { _id: 0 } }).toArray();
 
 	return { topics: result };
-};
+}) satisfies PageServerLoad;
 
 export const actions = {
 	'create': async ({ locals, request }) => {

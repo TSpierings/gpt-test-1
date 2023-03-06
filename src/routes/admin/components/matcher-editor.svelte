@@ -5,7 +5,7 @@
 	export let selectedItem: PromptMatcher;
 </script>
 
-<form method="post" action="?/create" class="create-topic" autocomplete="off">
+<form method="post" action="?/create" autocomplete="off">
 	<TextInputField name="title" label="Title" value={selectedItem.title} rows={1} />
 	<TextInputField name="matcher" label="Prompt matcher" value={selectedItem.prompt} rows={4} />
 	<div class="menu">
