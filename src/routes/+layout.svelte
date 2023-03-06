@@ -1,15 +1,10 @@
 <script lang="ts">
-	import { UserRole } from '$lib/models/user';
-	import Header from '../lib/header.svelte';
-	import type { PageData } from './$types';
-
-	export let data: PageData;
-
-	let { user } = data;
+	import Header from '../lib/components/haeder.svelte';
+  import { page } from '$app/stores';
 </script>
 
 <main id="main">
-	<Header role={user?.role ?? UserRole.default}/>
+	<Header user={$page.data.user} />
 
 	<slot />
 </main>
