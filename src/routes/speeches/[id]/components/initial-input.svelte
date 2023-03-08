@@ -39,7 +39,8 @@
 
 		for (let i = 0; i < speech.topics.length; i++) {
 			const topic = speech.topics[i];
-			topic.cursor < 0 ? await generateTopic(i) : null;
+			topic.content = [];
+			await generateTopic(i);
 		}
 	};
 </script>
@@ -49,7 +50,7 @@
 	bind:selected
 	tip={tips[selected]}
 	tipLevel={selected === 1 ? 1 : 0}
-	finishText="Generate"
+	finishText={speech.topics.some((topic) => topic.content.length > 0) ? 'Regenerate' : 'Generate'}
 	{onFinish}
 	{canContinue}
 >
