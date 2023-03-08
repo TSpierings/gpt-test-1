@@ -36,9 +36,11 @@
 
 	const onFinish = async () => {
 		currentSpeech.set(speech);
-		speech.topics.forEach(async (topic, index) =>
-			topic.cursor < 0 ? await generateTopic(index) : null
-		);
+
+		for (let i = 0; i < speech.topics.length; i++) {
+			const topic = speech.topics[i];
+			topic.cursor < 0 ? await generateTopic(i) : null;
+		}
 	};
 </script>
 
@@ -52,9 +54,9 @@
 	{canContinue}
 >
 	{#if selected === 0}
-		<GetStarted bind:speech {speechTypes}/>
+		<GetStarted bind:speech {speechTypes} />
 	{:else if selected === 1}
-		<SelectTopics bind:speech {topics}/>
+		<SelectTopics bind:speech {topics} />
 	{:else if selected === 2}
 		<TopicContent bind:speech />
 	{:else if selected === 3}

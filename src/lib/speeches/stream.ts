@@ -30,8 +30,6 @@ export const generateTopic = async (index: number) => {
     done = doneReading;
     const chunkValue = decoder.decode(value);
 
-    console.log(chunkValue);
-
     topic.content[topic.cursor] = (topic.content[topic.cursor] + chunkValue).trimStart();
     currentSpeech.set(speech);
   }
