@@ -19,7 +19,7 @@
 
 	<Panel title="Editor">
 		{#if selectedItem}
-			<MatcherEditor {selectedItem} />
+			<MatcherEditor {selectedItem} description={'Available parameters are: #title, #audience, #type, #length, #tone'} rows={8}/>
 		{/if}
 	</Panel>
 </div>
